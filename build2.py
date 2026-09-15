@@ -105,7 +105,7 @@ DESC = {
  76:"<code>Defender &gt; 설정 &gt; AI 보안 &gt; 정책 및 규칙</code>에서 ①② 순으로 커스텀 실시간 보호 정책을 만듭니다. <b>기본(Default) 정책은 Audit</b>이므로 차단이 필요하면 별도 커스텀 정책을 만들어야 합니다.",
  77:"정책 이름과 적용 범위를 지정합니다(①②).",
  78:"탐지 대상과 조치(Block/Audit)를 지정합니다(①~③).",
- 79:"정책 검토 후 생성합니다. 실시간 보호의 감사·차단 이벤트는 <b>동작(behavior)</b>으로 <code>BehaviorInfo</code> 테이블에 기록되며, <b>Prompt Shields for Foundry</b>와 <b>Copilot Agent Builder</b>의 차단 이벤트도 동작으로 기록됩니다. 다만 <b>Copilot Studio로 빌드된 에이전트의 차단 이벤트는 아직 지원되지 않습니다</b>(<a class=\\\"xref-ext\\\" href=\\\"https://learn.microsoft.com/ko-kr/defender-xdr/security-for-ai/ai-agent-real-time-protection#how-real-time-protection-works\\\" target=\\\"_blank\\\" rel=\\\"noopener\\\">공식 문서 · 실시간 보호 작동 방식</a>).",
+ 79:"정책 검토 후 생성합니다. 실시간 보호의 감사·차단 이벤트는 <b>동작(behavior)</b>으로 <code>BehaviorInfo</code> 테이블에 기록되며, <b>Prompt Shields for Foundry</b>와 <b>Copilot Agent Builder</b>의 차단 이벤트도 동작으로 기록됩니다. 다만 <b>Copilot Studio로 빌드된 에이전트의 차단 이벤트는 아직 지원되지 않습니다</b>(<a class='xref-ext' href='https://learn.microsoft.com/ko-kr/defender-xdr/security-for-ai/ai-agent-real-time-protection#how-real-time-protection-works' target='_blank' rel='noopener'>공식 문서 · 실시간 보호 작동 방식</a>).",
  80:"<b>프롬프트 증거 수집</b> 설정입니다. 켜면 경고 조사 시 실제 프롬프트 내용을 근거로 볼 수 있지만, 프롬프트 본문이 저장되므로 민감정보 취급 정책과 함께 검토해야 합니다.",
 
  82:"<code>Power Platform 관리 센터 &gt; 보안 &gt; ID 및 액세스 &gt; 에이전트에 대한 전역 보안 액세스</code>로 이동합니다(①~③). <b>전역 보안 액세스 관리자</b> 역할이 필요합니다.",
