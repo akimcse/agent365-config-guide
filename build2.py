@@ -439,6 +439,13 @@ overview = f"""
     </div>
     <p class="page-lead">이 가이드는 하나의 실습 환경에서 만든 데모 에이전트(<code>Agent365-Guide-Demo</code>)를 대상으로, 관리자·보안 담당자가 실제로 수행하는 구성 흐름을 재현합니다. 왼쪽 <b>구성 단계(0–7)</b> 목차에서 각 장으로 이동하고, 아래 표의 역할 행을 클릭하면 해당 단계로 바로 이동합니다.</p>
 
+    <h2 class="ov-h">이 가이드의 범위 · Copilot Studio 참고</h2>
+    <div class="scope-box">
+      <p>본 가이드는 <b>Microsoft Agent 365의 관리·보안 기능</b>을 메인으로 다룹니다. 따라서 아래 <b>0. 에이전트 생성</b> 장은 실습에 필요한 최소한의 Copilot Studio 에이전트 생성 흐름만 담고 있습니다.</p>
+      <p>지침 설계, 지식·도구(MCP) 심화 구성, 오케스트레이션, 채널·게시 등 <b>Copilot Studio 자체에 대한 더 자세한 내용</b>은 아래 문서를 참고하세요.</p>
+      <a class="cta-link" href="https://chichoi1991.github.io/Agent_Blog/chapters/newcs0-overview/" target="_blank" rel="noopener">New Copilot Studio 핸즈온 가이드 바로가기 ↗</a>
+    </div>
+
     <h2 class="ov-h">주요 진입 포털</h2>
     <p class="ov-sub">각 단계에서 사용하는 관리 포털입니다. 링크를 누르면 새 탭에서 해당 포털이 열립니다. 실제 접근에는 아래 <b>필요한 역할</b>이 선행되어야 합니다.</p>
     <div class="tw"><table><thead><tr><th>포털</th><th>이 가이드에서의 용도</th><th>바로가기</th></tr></thead><tbody>{portal_rows}</tbody></table></div>
@@ -447,13 +454,6 @@ overview = f"""
     <p class="ov-sub">각 단계를 수행하기 전에 아래 역할을 미리 할당해 두세요. 대부분 <b>Entra 관리 센터 &gt; 사용자 &gt; 할당된 역할 &gt; 할당 추가</b>에서 부여하며, 5장은 Purview 역할 그룹, 6장 일부는 Power Platform 관리자 지정이 필요합니다. 행을 클릭하면 해당 단계로 이동합니다.</p>
     <div class="tw"><table><thead><tr><th>#</th><th>단계</th><th>필요한 역할</th><th>할당 위치</th></tr></thead><tbody>{role_rows}</tbody></table></div>
     <div class="note">역할은 <b>최소 권한 원칙</b>에 따라 필요한 단계에만 부여하고, 실습이 끝나면 회수하는 것을 권장합니다. AI 관리자·에이전트 ID 관리자·조건부 액세스 관리자 등은 테넌트 전체에 영향을 주는 상위 권한이므로 할당 대상을 신중히 관리하세요.</div>
-
-    <h2 class="ov-h">이 가이드의 범위 · Copilot Studio 참고</h2>
-    <div class="scope-box">
-      <p>본 가이드는 <b>Microsoft Agent 365의 관리·보안 기능</b>을 메인으로 다룹니다. 따라서 아래 <b>0. 에이전트 생성</b> 장은 실습에 필요한 최소한의 Copilot Studio 에이전트 생성 흐름만 담고 있습니다.</p>
-      <p>지침 설계, 지식·도구(MCP) 심화 구성, 오케스트레이션, 채널·게시 등 <b>Copilot Studio 자체에 대한 더 자세한 내용</b>은 아래 문서를 참고하세요.</p>
-      <a class="cta-link" href="https://chichoi1991.github.io/Agent_Blog/chapters/newcs0-overview/" target="_blank" rel="noopener">New Copilot Studio 핸즈온 가이드 바로가기 ↗</a>
-    </div>
 
     <h2 class="ov-h">0단계를 건너뛰고 바로 시작하기 · 에이전트 Import</h2>
     <p class="ov-sub"><b>0. 에이전트 생성</b>을 건너뛰고 준비된 실습용 에이전트로 곧바로 Agent 365 기능(1~7단계)을 실습하려면, 아래 앱 패키지를 Teams에 업로드하세요. 두 가지 방법으로 사용할 수 있습니다.</p>

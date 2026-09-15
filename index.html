@@ -135,6 +135,13 @@ html[data-theme="dark"] .xref{color:var(--accent);}
     </div>
     <p class="page-lead">이 가이드는 하나의 실습 환경에서 만든 데모 에이전트(<code>Agent365-Guide-Demo</code>)를 대상으로, 관리자·보안 담당자가 실제로 수행하는 구성 흐름을 재현합니다. 왼쪽 <b>구성 단계(0–7)</b> 목차에서 각 장으로 이동하고, 아래 표의 역할 행을 클릭하면 해당 단계로 바로 이동합니다.</p>
 
+    <h2 class="ov-h">이 가이드의 범위 · Copilot Studio 참고</h2>
+    <div class="scope-box">
+      <p>본 가이드는 <b>Microsoft Agent 365의 관리·보안 기능</b>을 메인으로 다룹니다. 따라서 아래 <b>0. 에이전트 생성</b> 장은 실습에 필요한 최소한의 Copilot Studio 에이전트 생성 흐름만 담고 있습니다.</p>
+      <p>지침 설계, 지식·도구(MCP) 심화 구성, 오케스트레이션, 채널·게시 등 <b>Copilot Studio 자체에 대한 더 자세한 내용</b>은 아래 문서를 참고하세요.</p>
+      <a class="cta-link" href="https://chichoi1991.github.io/Agent_Blog/chapters/newcs0-overview/" target="_blank" rel="noopener">New Copilot Studio 핸즈온 가이드 바로가기 ↗</a>
+    </div>
+
     <h2 class="ov-h">주요 진입 포털</h2>
     <p class="ov-sub">각 단계에서 사용하는 관리 포털입니다. 링크를 누르면 새 탭에서 해당 포털이 열립니다. 실제 접근에는 아래 <b>필요한 역할</b>이 선행되어야 합니다.</p>
     <div class="tw"><table><thead><tr><th>포털</th><th>이 가이드에서의 용도</th><th>바로가기</th></tr></thead><tbody><tr><td class="pname">Copilot Studio</td><td>에이전트 생성 · 지침/지식/도구 구성 · 게시</td><td><a class="portal-link" href="https://copilotstudio.microsoft.com" target="_blank" rel="noopener">copilotstudio.microsoft.com ↗</a></td></tr><tr><td class="pname">Microsoft 365 관리 센터 (MAC)</td><td>에이전트 승인 · 전사 배포 · 인벤토리(레지스트리)</td><td><a class="portal-link" href="https://admin.microsoft.com" target="_blank" rel="noopener">admin.microsoft.com ↗</a></td></tr><tr><td class="pname">Microsoft Entra 관리 센터</td><td>역할 할당 · 조건부 액세스 · 로그인 로그 · Gen AI 인사이트</td><td><a class="portal-link" href="https://entra.microsoft.com" target="_blank" rel="noopener">entra.microsoft.com ↗</a></td></tr><tr><td class="pname">Power Platform 관리 센터 (PPAC)</td><td>환경 보안 · 위협 탐지 · 에이전트용 전역 보안 액세스(GSA)</td><td><a class="portal-link" href="https://admin.powerplatform.microsoft.com" target="_blank" rel="noopener">admin.powerplatform.microsoft.com ↗</a></td></tr><tr><td class="pname">Microsoft Defender 포털</td><td>AI 보안 커넥터 · Copilot Studio 런타임 보호 정책</td><td><a class="portal-link" href="https://security.microsoft.com" target="_blank" rel="noopener">security.microsoft.com ↗</a></td></tr><tr><td class="pname">Microsoft Purview 포털</td><td>내부 위험 관리(IRM) · 감사 · 에이전트 리스크 경고</td><td><a class="portal-link" href="https://purview.microsoft.com" target="_blank" rel="noopener">purview.microsoft.com ↗</a></td></tr></tbody></table></div>
@@ -143,13 +150,6 @@ html[data-theme="dark"] .xref{color:var(--accent);}
     <p class="ov-sub">각 단계를 수행하기 전에 아래 역할을 미리 할당해 두세요. 대부분 <b>Entra 관리 센터 &gt; 사용자 &gt; 할당된 역할 &gt; 할당 추가</b>에서 부여하며, 5장은 Purview 역할 그룹, 6장 일부는 Power Platform 관리자 지정이 필요합니다. 행을 클릭하면 해당 단계로 이동합니다.</p>
     <div class="tw"><table><thead><tr><th>#</th><th>단계</th><th>필요한 역할</th><th>할당 위치</th></tr></thead><tbody><tr class="jump" data-target="ch0" tabindex="0"><td>0</td><td>에이전트 생성</td><td>환경 제작자(Maker) 이상</td><td>Power Platform 관리 센터 · 환경/보안 역할</td></tr><tr class="jump" data-target="ch1" tabindex="0"><td>1</td><td>승인 및 전사 배포</td><td>AI 관리자</td><td>Entra &gt; 사용자 &gt; 할당된 역할</td></tr><tr class="jump" data-target="ch2" tabindex="0"><td>2</td><td>인벤토리 확인</td><td>AI 읽기 권한자</td><td>Entra &gt; 사용자 &gt; 할당된 역할</td></tr><tr class="jump" data-target="ch3" tabindex="0"><td>3</td><td>에이전트 차단</td><td>AI 관리자 · 에이전트 ID 관리자</td><td>Entra &gt; 사용자 &gt; 할당된 역할</td></tr><tr class="jump" data-target="ch4" tabindex="0"><td>4</td><td>조건부 접근제어</td><td>조건부 액세스 관리자</td><td>Entra &gt; 사용자 &gt; 할당된 역할</td></tr><tr class="jump" data-target="ch5" tabindex="0"><td>5</td><td>리스크 탐지</td><td>내부자 위험 관리 분석가 또는 조사자</td><td>Purview &gt; 역할 및 범위 &gt; 역할 그룹</td></tr><tr class="jump" data-target="ch6" tabindex="0"><td>6</td><td>런타임 보호</td><td>애플리케이션 관리자 · 보안 관리자 · Power Platform 관리자</td><td>Entra &gt; 역할 / Power Platform 관리 센터</td></tr><tr class="jump" data-target="ch7" tabindex="0"><td>7</td><td>트래픽 모니터링</td><td>전역 보안 액세스 관리자</td><td>Entra &gt; 사용자 &gt; 할당된 역할</td></tr></tbody></table></div>
     <div class="note">역할은 <b>최소 권한 원칙</b>에 따라 필요한 단계에만 부여하고, 실습이 끝나면 회수하는 것을 권장합니다. AI 관리자·에이전트 ID 관리자·조건부 액세스 관리자 등은 테넌트 전체에 영향을 주는 상위 권한이므로 할당 대상을 신중히 관리하세요.</div>
-
-    <h2 class="ov-h">이 가이드의 범위 · Copilot Studio 참고</h2>
-    <div class="scope-box">
-      <p>본 가이드는 <b>Microsoft Agent 365의 관리·보안 기능</b>을 메인으로 다룹니다. 따라서 아래 <b>0. 에이전트 생성</b> 장은 실습에 필요한 최소한의 Copilot Studio 에이전트 생성 흐름만 담고 있습니다.</p>
-      <p>지침 설계, 지식·도구(MCP) 심화 구성, 오케스트레이션, 채널·게시 등 <b>Copilot Studio 자체에 대한 더 자세한 내용</b>은 아래 문서를 참고하세요.</p>
-      <a class="cta-link" href="https://chichoi1991.github.io/Agent_Blog/chapters/newcs0-overview/" target="_blank" rel="noopener">New Copilot Studio 핸즈온 가이드 바로가기 ↗</a>
-    </div>
 
     <h2 class="ov-h">0단계를 건너뛰고 바로 시작하기 · 에이전트 Import</h2>
     <p class="ov-sub"><b>0. 에이전트 생성</b>을 건너뛰고 준비된 실습용 에이전트로 곧바로 Agent 365 기능(1~7단계)을 실습하려면, 아래 앱 패키지를 Teams에 업로드하세요. 두 가지 방법으로 사용할 수 있습니다.</p>
