@@ -262,6 +262,10 @@ html[data-theme="dark"] code{color:#ff9dd4;}
 .nav-group a.active{background:linear-gradient(135deg,rgba(15,108,189,.12),rgba(138,92,246,.12));color:var(--accent);font-weight:600;}
 .nav-group a .n{flex:0 0 22px;height:22px;display:grid;place-items:center;border-radius:6px;background:var(--surface-2);border:1px solid var(--border);font-size:12px;font-weight:700;}
 .nav-group a.active .n{background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;border-color:transparent;}
+.nav-parent{font-weight:600;}
+.nav-children{margin:2px 0 2px 10px;padding-left:12px;border-left:1.5px solid var(--border);}
+.nav-sub .n{flex:0 0 20px;height:20px;font-size:11px;}
+.nav-sub{font-size:13.5px;padding:7px 10px;}
 .theme-toggle{display:inline-flex;align-items:center;gap:6px;margin:auto 8px 2px;align-self:flex-start;padding:8px 15px;background:var(--surface-2);border:1px solid var(--border);border-radius:999px;color:var(--text);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;}
 .theme-toggle:hover{border-color:var(--accent);background:var(--surface);}
 .main{flex:1;min-width:0;}
@@ -279,6 +283,18 @@ h2.ov-h::before{content:"";position:absolute;left:0;top:2px;bottom:10px;width:5p
 .page-lead{color:var(--text-soft);font-size:15.5px;margin:0 0 8px;}
 .pname{font-weight:700;white-space:nowrap;}
 .portal-link{font-family:"Cascadia Code",Consolas,monospace;font-size:12.5px;white-space:nowrap;}
+.scope-box{background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--accent-2);border-radius:10px;padding:16px 18px;box-shadow:var(--shadow);margin:6px 0 8px;}
+.scope-box p{margin:0 0 10px;font-size:14.5px;}
+.cta-link{display:inline-block;margin-top:4px;padding:9px 16px;border-radius:8px;font-weight:600;font-size:14px;color:#fff;background:linear-gradient(135deg,var(--accent),var(--accent-2));text-decoration:none;}
+.cta-link:hover{text-decoration:none;opacity:.92;}
+.download-btn{display:inline-flex;align-items:center;gap:8px;margin:2px 0 14px;padding:9px 15px;border-radius:8px;font-weight:600;font-size:13.5px;color:var(--accent);background:var(--surface);border:1px solid var(--border);text-decoration:none;}
+.download-btn:hover{text-decoration:none;border-color:var(--accent);background:var(--surface-2);}
+.method{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 18px;box-shadow:var(--shadow);margin:0 0 12px;}
+.method-head{display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px;margin-bottom:6px;}
+.method-no{flex:0 0 24px;height:24px;display:inline-flex;align-items:center;justify-content:center;border-radius:7px;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;font-size:13px;}
+.method p{margin:6px 0;font-size:14px;}
+.method-cond{color:var(--text-soft);font-size:13px;}
+.rec{font-size:11px;font-weight:700;color:#fff;background:var(--low,#3a7d34);border-radius:999px;padding:2px 9px;margin-left:2px;}
 table{width:100%;border-collapse:collapse;margin:6px 0 8px;font-size:14px;background:var(--surface);border-radius:10px;overflow:hidden;box-shadow:var(--shadow);}
 .tw{overflow-x:auto;}
 th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top;}
@@ -337,12 +353,11 @@ HTML = """<!DOCTYPE html>
   <div class="brand"><span class="dot"></span><span>Agent 365 초기 설정 및 구성 가이드</span></div>
   <div class="brand-sub">Copilot Studio · 관리 · 보안 실습 (0–7)</div>
   <nav class="nav-group">
-    <h4>개요</h4>
-    <a href="#overview" data-sec="overview"><span class="n">◆</span><span>Copilot Studio 에이전트</span></a>
-  </nav>
-  <nav class="nav-group">
-    <h4>구성 단계</h4>
+    <h4>가이드</h4>
+    <a href="#overview" data-sec="overview" class="nav-parent"><span class="n">◆</span><span>Copilot Studio 에이전트</span></a>
+    <div class="nav-children">
     __NAV__
+    </div>
   </nav>
   <button class="theme-toggle" id="tt">🌓 테마 전환</button>
 </aside>
@@ -433,12 +448,33 @@ overview = f"""
     <div class="tw"><table><thead><tr><th>#</th><th>단계</th><th>필요한 역할</th><th>할당 위치</th></tr></thead><tbody>{role_rows}</tbody></table></div>
     <div class="note">역할은 <b>최소 권한 원칙</b>에 따라 필요한 단계에만 부여하고, 실습이 끝나면 회수하는 것을 권장합니다. AI 관리자·에이전트 ID 관리자·조건부 액세스 관리자 등은 테넌트 전체에 영향을 주는 상위 권한이므로 할당 대상을 신중히 관리하세요.</div>
 
+    <h2 class="ov-h">이 가이드의 범위 · Copilot Studio 참고</h2>
+    <div class="scope-box">
+      <p>본 가이드는 <b>Microsoft Agent 365의 관리·보안 기능</b>을 메인으로 다룹니다. 따라서 아래 <b>0. 에이전트 생성</b> 장은 실습에 필요한 최소한의 Copilot Studio 에이전트 생성 흐름만 담고 있습니다.</p>
+      <p>지침 설계, 지식·도구(MCP) 심화 구성, 오케스트레이션, 채널·게시 등 <b>Copilot Studio 자체에 대한 더 자세한 내용</b>은 아래 문서를 참고하세요.</p>
+      <a class="cta-link" href="https://chichoi1991.github.io/Agent_Blog/chapters/newcs0-overview/" target="_blank" rel="noopener">New Copilot Studio 핸즈온 가이드 바로가기 ↗</a>
+    </div>
+
+    <h2 class="ov-h">0단계를 건너뛰고 바로 시작하기 · 에이전트 Import</h2>
+    <p class="ov-sub"><b>0. 에이전트 생성</b>을 건너뛰고 준비된 실습용 에이전트로 곧바로 Agent 365 기능(1~7단계)을 실습하려면, 아래 앱 패키지를 Teams에 업로드하세요. 두 가지 방법으로 사용할 수 있습니다.</p>
+    <a class="download-btn" href="files/Agent365-Guide-Demo.zip" download>⬇ 실습용 에이전트 패키지 내려받기 (Agent365-Guide-Demo.zip)</a>
+    <div class="method">
+      <div class="method-head"><span class="method-no">1</span> 나 / 소수만 테스트 — 사이드로드</div>
+      <p>Teams → <b>앱</b> → <b>앱 관리</b> → <b>앱 업로드</b> → <b>사용자 지정 앱 업로드</b>에 zip을 그대로 올립니다.</p>
+      <p class="method-cond">※ 테넌트에서 <b>사용자 지정 앱 업로드(사이드로드)</b>가 허용되어 있어야 합니다.</p>
+    </div>
+    <div class="method">
+      <div class="method-head"><span class="method-no">2</span> 조직 전체에 배포 — Teams 관리 센터</div>
+      <p><a href="https://admin.teams.microsoft.com" target="_blank" rel="noopener">admin.teams.microsoft.com</a> → <b>Teams 앱</b> → <b>앱 관리</b> → <b>새 앱 업로드</b> → zip 업로드 → 해당 앱을 <b>앱 설정 정책</b>에 추가해 사용자/그룹에게 배포합니다.</p>
+      <p class="method-cond">M365 Copilot에서도 같은 앱이 에이전트로 노출됩니다.</p>
+    </div>
+
     <div class="pagenav"><span class="pn-empty"></span><a class="nxt" href="#ch0" data-go="ch0"><span class="lbl">다음 →</span><br>0. 에이전트 생성</a></div>
   </section>"""
 parts.insert(0, overview)
 
 nav_html = "\n    ".join(
-    f'<a href="#{c["id"]}" data-sec="{c["id"]}"><span class="n">{c["num"]}</span><span>{esc(c["name"])}</span></a>'
+    f'<a href="#{c["id"]}" data-sec="{c["id"]}" class="nav-sub"><span class="n">{c["num"]}</span><span>{esc(c["name"])}</span></a>'
     for c in CH)
 out = HTML.replace("__CSS__", CSS).replace("__NAV__", nav_html).replace("__SECTIONS__", "\n".join(parts))
 path = os.path.join(BASE, "index.html")
