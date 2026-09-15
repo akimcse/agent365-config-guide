@@ -456,7 +456,7 @@ overview = f"""
     <div class="note">역할은 <b>최소 권한 원칙</b>에 따라 필요한 단계에만 부여하고, 실습이 끝나면 회수하는 것을 권장합니다. AI 관리자·에이전트 ID 관리자·조건부 액세스 관리자 등은 테넌트 전체에 영향을 주는 상위 권한이므로 할당 대상을 신중히 관리하세요.</div>
 
     <h2 class="ov-h">0단계를 건너뛰고 바로 시작하기 · 에이전트 Import</h2>
-    <p class="ov-sub"><b>0. 에이전트 생성</b>을 건너뛰고 준비된 실습용 에이전트로 곧바로 Agent 365 기능(1~7단계)을 실습하려면, 아래 앱 패키지를 Teams에 업로드하세요. 두 가지 방법으로 사용할 수 있습니다.</p>
+    <p class="ov-sub"><b>0. 에이전트 생성</b>을 건너뛰고 준비된 실습용 에이전트로 곧바로 Agent 365 기능(2~7단계)을 실습하려면, 아래 앱 패키지를 Teams에 업로드하세요. 이 패키지는 조직 배포(1단계)까지 완료된 상태로 제공되므로, 업로드 후 <b>2. 에이전트 인벤토리 확인</b>부터 바로 이어서 실습할 수 있습니다. 두 가지 방법으로 사용할 수 있습니다.</p>
     <a class="download-btn" href="files/Agent365-Guide-Demo.zip" download>⬇ 실습용 에이전트 패키지 내려받기 (Agent365-Guide-Demo.zip)</a>
     <div class="method">
       <div class="method-head"><span class="method-no">1</span> 나 / 소수만 테스트 — 사이드로드</div>
