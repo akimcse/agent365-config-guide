@@ -185,7 +185,7 @@ html[data-theme="dark"] .xref{color:var(--accent);}
         
         <a href="img/slide-04.png" target="_blank" rel="noopener"><img loading="lazy" src="img/slide-04.png" alt="환경·권한 준비 — 실습 환경 선택"></a>
       </figure>
-      <div class="note">New Copilot Studio 우측 상단의 환경 선택기에서 실습에 사용할 Power Platform 환경을 먼저 고정합니다. 여기서 선택한 환경이 6장(런타임 보호)·7장(트래픽 모니터링)의 <b>환경 단위 설정 대상</b>과 동일해야 하므로, 처음부터 실습 환경을 정해두는 것이 중요합니다. 해당 환경에 대한 제작자(Maker) 이상의 역할이 필요합니다.</div>
+      <div class="note">New Copilot Studio 우측 상단의 환경 선택기에서 실습에 사용할 Power Platform 환경을 먼저 고정합니다. <b>Power Platform 환경</b>은 앱·에이전트·데이터(Dataverse)를 담는 격리된 컨테이너로, 환경마다 접근 권한·보안·DLP 정책이 따로 적용됩니다. 여기서 선택한 환경이 6장(런타임 보호)·7장(트래픽 모니터링)의 <b>환경 단위 설정 대상</b>과 동일해야 하므로, 처음부터 실습 환경을 정해두는 것이 중요합니다. 해당 환경에 대한 제작자(Maker) 이상의 역할이 필요합니다.<br><br><b>⚠️ Notice —</b> 본 Agent 365 관련 데모는 기본 환경(Default Environment)에서도 따라 하실 수는 있으나, <b>실 운영 환경에서는 반드시 테스트를 위한 별도의 환경을 구성하시어 진행</b>하셔야 합니다. 환경 개념·생성 방법은 <a class='xref-ext' href='https://learn.microsoft.com/ko-kr/power-platform/admin/environments-overview' target='_blank' rel='noopener'>Power Platform 환경 개요(공식 문서)</a>를 참고하세요.</div>
       <figure class="fig" id="s5">
         <div class="fig-title"><span class="fig-num">2-1</span>빈 에이전트 생성 — New agent</div>
         
@@ -288,7 +288,7 @@ html[data-theme="dark"] .xref{color:var(--accent);}
         
         <a href="img/slide-20.png" target="_blank" rel="noopener"><img loading="lazy" src="img/slide-20.png" alt="관리자 승인 — 게시 마법사 시작"></a>
       </figure>
-      <div class="note">요청 상세에서 ① <b>Microsoft Store에 게시</b> 버튼을 선택해 게시 마법사를 시작합니다. 이 화면에서 제작자·업무 목적·지식·도구·요청 권한을 검토하고, 부적절하면 제출을 거부할 수 있습니다.</div>
+      <div class="note">요청 상세에서 ① <b>Microsoft Store에 게시</b> 버튼을 선택해 게시 마법사를 시작합니다. 이 화면에서 제작자·업무 목적·지식·도구·요청 권한을 검토하고, 부적절하면 제출을 거부할 수 있습니다. 상세 화면은 여러 탭으로 구성되며, 각 탭에서 다음을 확인합니다 — <b>세부 정보</b>: 제작자·소유자·업무 목적·게시 채널, <b>데이터 &amp; 도구</b>: 연결된 지식 원본과 MCP 도구 목록, <b>보안</b>: 인증·신뢰 경계 설정, <b>사용 권한</b>: 에이전트가 요청하는 API/커넥터 권한.<br><br><b>보안·AX 담당자 전사 게시 전 체크리스트</b><br>• 에이전트의 <b>목적·지침 대비 적정한 MCP 도구</b>만 연결되어 있는가(불필요한 광범위 도구 없음)<br>• 지식 원본이 <b>민감 사이트·과도한 범위</b>를 포함하지 않는가<br>• 요청 권한이 업무 목적에 비해 <b>과도하지 않은가</b>(최소 권한)<br>• 제작자·소유자가 <b>식별·검증</b> 가능한가<br>부적절한 경우 승인을 보류하고 제작자에게 수정 요청 후 재제출받습니다.</div>
       <figure class="fig" id="s21">
         <div class="fig-title"><span class="fig-num">2-1</span>전사 배포 — 게시·미리 설치 대상</div>
         
@@ -306,7 +306,7 @@ html[data-theme="dark"] .xref{color:var(--accent);}
         
         <a href="img/slide-23.png" target="_blank" rel="noopener"><img loading="lazy" src="img/slide-23.png" alt="전사 배포 — 권한 검토"></a>
       </figure>
-      <div class="note">권한 검토 화면입니다. 이 사례에서는 <b>필요한 권한 없음</b>으로 표시됐지만, 이는 에이전트의 모든 MCP 도구가 무권한으로 실행된다는 뜻이 <b>아닙니다</b>. 도구별 인증·동의는 별도로 적용되며, 실제 데이터 접근은 도구 수준에서 다시 통제됩니다.</div>
+      <div class="note">권한 검토 화면입니다. 이 사례에서는 <b>필요한 권한 없음</b>으로 표시됐지만, 이는 에이전트의 모든 MCP 도구가 무권한으로 실행된다는 뜻이 <b>아닙니다</b>. 도구별 인증·동의는 별도로 적용되며, 실제 데이터 접근은 도구 수준에서 다시 통제됩니다.<br><br><b>참고 —</b> 현재 <b>Copilot Studio 에이전트</b>는 GCC·Standard 환경 모두에서 <b>생성 시점에 API 권한(위임/애플리케이션 권한)을 직접 부여하지 못합니다</b>. 따라서 이 화면에 요청 권한이 비어 있는 것은 정상이며, 실제 권한은 각 도구·커넥터를 사용할 때 <b>런타임에 사용자 동의·연결 단위로 부여</b>됩니다.</div>
       <figure class="fig" id="s24">
         <div class="fig-title"><span class="fig-num">2-4</span>전사 배포 — 최종 검토</div>
         
@@ -412,7 +412,7 @@ html[data-theme="dark"] .xref{color:var(--accent);}
     <div class="hero">
       <span class="tag">Chapter 4 · Microsoft Agent 365</span>
       <h1>4. 에이전트에 대한 조건부 접근제어</h1>
-      <p>Entra 조건부 액세스 정책을 에이전트(Agent ID)와 에이전트가 사용하는 리소스에 적용하고, 로그인 로그로 정책 평가 결과를 검증하는 단계입니다.</p>
+      <p>Entra 조건부 액세스 정책을 에이전트(Agent ID)와 에이전트가 사용하는 리소스에 적용하고, 로그인 로그로 정책 평가 결과를 검증하는 단계입니다. 대표적으로 &lt;b&gt;대상 리소스가 에이전트가 되는 접근제어 시나리오&lt;/b&gt;를 구성합니다 — 예: 사내(신뢰 네트워크)에서는 특정 에이전트 접근을 허용하고, 사외에서는 차단. 아래 실습은 이 시나리오를 기준으로 정책을 만들고 로그인 로그로 허용/차단 결과를 확인합니다.</p>
     </div>
     <h2 class="ov-h">전체 순서 한눈에 보기</h2>
     <div class="tw"><table><thead><tr><th>#</th><th>항목</th><th>설정 위치</th><th>확인 포인트</th></tr></thead><tbody><tr><td>0</td><td>역할/권한 준비</td><td>Entra 관리 센터 &gt; 사용자 &gt; 할당된 역할 &gt; 할당 추가 &gt; 역할 선택</td><td>조건부 액세스 관리자 추가</td></tr><tr class="jump" data-target="s39" tabindex="0"><td>1</td><td>대상 정책 생성</td><td>조건부 액세스 &gt; 정책 &gt; 새 정책<br>에이전트 / 대상 리소스 / 권한 부여</td><td>Agent ID·실제 커넥터 리소스 지정</td></tr><tr class="jump" data-target="s45" tabindex="0"><td>2</td><td>정책 평가 확인</td><td>Teams에서 에이전트 및 커넥터 실행<br>Entra &gt; 모니터링 및 상태 &gt; 로그인 로그</td><td>Agent ID·리소스·시각·CA 결과 대조<br>(Report-only는 실제 차단하지 않음)</td></tr></tbody></table></div>
@@ -520,7 +520,7 @@ html[data-theme="dark"] .xref{color:var(--accent);}
         
         <a href="img/slide-54.png" target="_blank" rel="noopener"><img loading="lazy" src="img/slide-54.png" alt="에이전트 정책 생성 — 콘텐츠 우선순위 설정"></a>
       </figure>
-      <div class="note">우선순위로 다룰 콘텐츠(민감도 레이블·사이트·파일 유형 등)를 선택합니다(①②).</div>
+      <div class="note">우선순위로 다룰 콘텐츠(민감도 레이블·사이트·파일 유형 등)를 선택합니다(①②). <b>우선순위 콘텐츠 지정 여부는 위험 점수 산정에 직접 영향</b>을 줍니다 — 우선순위로 지정한 콘텐츠(예: 민감도 레이블이 높은 문서, 특정 SharePoint 사이트)에 에이전트가 접근·조작하면 <b>더 높은 위험 가중치</b>가 부여되어 경고 심각도가 올라가고 더 쉽게 트리거됩니다. 지정하지 않으면 모든 콘텐츠가 동일 가중치로 평가되어 <b>중요 자산에 대한 위험 활동이 상대적으로 묻힐 수</b> 있습니다. 따라서 조직의 핵심 자산을 우선순위로 지정해 탐지 민감도를 집중시키는 것이 좋습니다.</div>
       <figure class="fig" id="s55">
         <div class="fig-title"><span class="fig-num">2-6</span>에이전트 정책 생성 — 콘텐츠 우선순위 설정</div>
         
@@ -574,7 +574,7 @@ html[data-theme="dark"] .xref{color:var(--accent);}
         
         <a href="img/slide-64.png" target="_blank" rel="noopener"><img loading="lazy" src="img/slide-64.png" alt="에이전트 경고 확인"></a>
       </figure>
-      <div class="note">경고가 생성된 경우의 확인 경로입니다(①~③). 대상 에이전트, 심각도, 활동 순서를 함께 확인해 어떤 도구 호출이 위험 신호로 잡혔는지 추적합니다.</div>
+      <div class="note">경고가 생성된 경우의 확인 경로입니다(①~③). 대상 에이전트, 심각도, 활동 순서를 함께 확인해 어떤 도구 호출이 위험 신호로 잡혔는지 추적합니다.<br><br><b>IRM 경고(이벤트) 분석 방법</b><br>① <b>경고 상세</b>를 열어 트리거된 지표·심각도·관련 사용자/에이전트를 확인합니다.<br>② <b>활동 탐색기(Activity explorer)</b>에서 해당 에이전트의 활동 타임라인을 열어, 경고 전후의 파일 접근·도구 호출·데이터 이동 순서를 재구성합니다.<br>③ 경고에 첨부된 <b>증거(파일·도구·콘텐츠)</b>로 실제 어떤 자산이 관련됐는지 확인합니다.<br>④ 심층 분석이 필요하면 Defender의 <b>고급 헌팅(Advanced Hunting)</b>에서 <code>CloudAppEvents</code>(에이전트 활동)·<code>AlertInfo</code>·<code>AlertEvidence</code> 테이블을 KQL로 상관 분석해 근본 원인과 영향 범위를 추적합니다.</div>
     <div class="pagenav"><a class="prv" href="#ch4" data-go="ch4"><span class="lbl">← 이전</span><br>4. 에이전트에 대한 조건부 접근제어</a><a class="nxt" href="#ch6" data-go="ch6"><span class="lbl">다음 →</span><br>6. 에이전트 런타임 보호</a></div>
   </section>
 
@@ -681,7 +681,7 @@ html[data-theme="dark"] .xref{color:var(--accent);}
         
         <a href="img/slide-80.png" target="_blank" rel="noopener"><img loading="lazy" src="img/slide-80.png" alt="런타임 보호 정책 설정 — 프롬프트 증거 수집"></a>
       </figure>
-      <div class="note"><b>프롬프트 증거 수집</b> 설정입니다. 켜면 경고 조사 시 실제 프롬프트 내용을 근거로 볼 수 있지만, 프롬프트 본문이 저장되므로 민감정보 취급 정책과 함께 검토해야 합니다.</div>
+      <div class="note"><b>프롬프트 증거 수집</b> 설정입니다. 켜면 경고 조사 시 실제 프롬프트 내용을 근거로 볼 수 있지만, 프롬프트 본문이 저장되므로 민감정보 취급 정책과 함께 검토해야 합니다.<br><br><b>탐지 가능한 이벤트와 로그·경고 확인</b><br>Defender는 Agent 365 관측 데이터를 분석해 <b>탈옥(jailbreak) 시도, 간접 프롬프트 인젝션(XPIA), 악성 콘텐츠 전파, 비밀·자격 증명 유출, 회피 기법, LLM 정찰, 의심스러운 사용자·IP 접근</b> 등을 준실시간으로 탐지합니다. 관련 이벤트는 다음에서 확인합니다 — <b>Defender 포털의 사건·경고</b>(준실시간 탐지), 고급 헌팅의 <code>AlertInfo</code>(경고 메타데이터)·<code>BehaviorInfo</code>(실시간 보호 감사·차단 동작)·<code>CloudAppEvents</code>(에이전트 활동·도구 호출)·<code>AlertEvidence</code>(관련 엔터티). 자세한 탐지·조사 방법은 <a class='xref-ext' href='https://learn.microsoft.com/ko-kr/defender-xdr/security-for-ai/ai-agent-detection-protection' target='_blank' rel='noopener'>AI 에이전트 위협 탐지 및 조사(공식 문서)</a>를 참고하세요.</div>
     <div class="pagenav"><a class="prv" href="#ch5" data-go="ch5"><span class="lbl">← 이전</span><br>5. 에이전트 리스크 탐지</a><a class="nxt" href="#ch7" data-go="ch7"><span class="lbl">다음 →</span><br>7. 에이전트 트래픽 모니터링</a></div>
   </section>
 
