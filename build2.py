@@ -11,21 +11,21 @@ def table_of(slide_no):
     return None
 
 CH = [
- dict(id="ch0", num="0", name="에이전트 생성", intro=3, range=(4,17),
+ dict(id="ch0", num="0", orig="0", name="에이전트 생성", intro=3, range=(4,17),
       lead="Copilot Studio(New experience)에서 실습용 에이전트를 만들고, 지침·지식·도구를 구성한 뒤 Teams / Microsoft 365 Copilot 채널로 게시하고 관리자 승인까지 제출하는 단계입니다. 이후 1~7장의 모든 관리·보안 시나리오는 여기서 만든 에이전트를 대상으로 진행합니다."),
- dict(id="ch1", num="1", name="에이전트 승인 및 전사 배포", intro=18, range=(19,25),
+ dict(id="ch1", num="1", orig="1", name="에이전트 승인 및 전사 배포", intro=18, range=(19,25),
       lead="제작자가 제출한 에이전트를 AI 관리자가 검토·승인하고, 조직 카탈로그(Microsoft Store)에 게시해 전사에 배포하는 단계입니다. 승인 심사에서는 제작자·업무 목적·지식·도구·요청 권한을 함께 확인합니다."),
- dict(id="ch2", num="2", name="에이전트 인벤토리 확인", intro=26, range=(27,30),
+ dict(id="ch2", num="2", orig="2", name="에이전트 인벤토리 확인", intro=26, range=(27,30),
       lead="테넌트에 존재하는 에이전트를 레지스트리에서 조회하고, 각 에이전트의 소유자·지식·도구·권한·채널 구성과 실제 사용량을 확인하는 단계입니다. 등록되어 있다는 것과 실제로 쓰이고 있다는 것은 다르므로 두 가지를 분리해서 봅니다."),
- dict(id="ch3", num="3", name="에이전트 차단", intro=31, range=(32,37),
+ dict(id="ch3", num="3", orig="3", name="에이전트 차단", intro=31, range=(32,37),
       lead="문제가 있는 에이전트를 즉시 사용 불가 상태로 만들고, 사용자 화면에서 실제로 차단됐는지 확인한 뒤 복구하는 단계입니다. 차단은 삭제나 Agent ID 인증 중지와는 구분되는 조치입니다."),
- dict(id="ch4", num="4", name="에이전트에 대한 조건부 접근제어", intro=38, range=(39,47),
-      lead="Entra 조건부 액세스 정책을 에이전트(Agent ID)와 에이전트가 사용하는 리소스에 적용하고, 로그인 로그로 정책 평가 결과를 검증하는 단계입니다. 대표적으로 <b>대상 리소스가 에이전트가 되는 접근제어 시나리오</b>를 구성합니다 — 예: 사내(신뢰 네트워크)에서는 특정 에이전트 접근을 허용하고, 사외에서는 차단. 아래 실습은 이 시나리오를 기준으로 정책을 만들고 로그인 로그로 허용/차단 결과를 확인합니다."),
- dict(id="ch5", num="5", name="에이전트 리스크 탐지", intro=48, range=(49,64),
+ dict(id="ch4", num="4", orig="5", name="에이전트 리스크 탐지", intro=48, range=(49,64),
       lead="Purview 내부 위험 관리(IRM)에서 에이전트 정책을 만들어 위험 신호를 수집하고, 에이전트 경고를 확인하는 단계입니다. 감사 로그 수집이 켜져 있어야 지표·경고가 생성됩니다."),
- dict(id="ch6", num="6", name="에이전트 런타임 보호", intro=65, range=(66,80),
+ dict(id="ch5", num="5", orig="4", name="에이전트에 대한 조건부 접근제어", intro=38, range=(39,47), custom=True,
+      lead="사용자가 <b>사외(신뢰할 수 없는 네트워크)</b>에서 <b>Copilot Studio 에이전트</b>를 사용하지 못하도록 Entra 조건부 액세스 정책을 만들고, 실제 차단과 로그인 로그의 평가 결과를 확인하는 단계입니다. 접근 제어 대상이 클라우드 리소스가 아니라 에이전트 자체가 됩니다."),
+ dict(id="ch6", num="6", orig="6", name="에이전트 런타임 보호", intro=65, range=(66,80),
       lead="Defender AI 보안과 Power Platform 위협 탐지를 연결해, Copilot Studio 에이전트의 도구 호출·프롬프트를 실시간으로 검사하고 차단하는 단계입니다. 커넥터 설정 → 인증용 앱 생성 → 환경 연결 → 보호 정책 순으로 진행합니다."),
- dict(id="ch7", num="7", name="에이전트 트래픽 모니터링", intro=81, range=(82,86),
+ dict(id="ch7", num="7", orig="7", name="에이전트 트래픽 모니터링", intro=81, range=(82,86),
       lead="Global Secure Access for Agents(preview)를 환경 단위로 켜고, Entra의 Gen AI 인사이트 로그에서 에이전트가 주고받은 실제 트래픽(요청·응답)을 조회하는 단계입니다."),
 ]
 
@@ -34,7 +34,7 @@ DESC = {
  5:"Agents 화면에서 <b>New agent</b>를 선택해 템플릿이 아닌 빈 에이전트로 시작합니다. 빈 에이전트로 시작해야 지침·지식·도구를 하나씩 통제하면서 붙일 수 있고, 이후 승인 심사에서 무엇이 왜 붙었는지 설명하기 쉽습니다. 이 가이드에서는 <code>Agent365-Guide-Demo</code>라는 이름을 사용합니다.",
  6:"① 에이전트 이름, ② 지침(Instructions), ③ 모델·행동 설정 순으로 입력합니다. New experience에서는 모델과 오케스트레이션 설정 위치가 기존 UI와 달라 <code>Settings &gt; AI &amp; behavior</code>에서 확인해야 하며, 기존의 '생성형 AI' 토글과는 구분됩니다. 지침은 1장의 관리자 승인 심사에서 <b>업무 목적을 판단하는 근거</b>가 되므로 구체적으로 작성합니다.",
  7:"<code>Build &gt; Add knowledge</code>에서 SharePoint·OneDrive·Dataverse 등 지식 원본을 연결합니다. 여기서 붙인 지식은 1장의 관리자 승인 화면과 2장의 인벤토리 <b>데이터 &amp; 도구</b> 탭에 그대로 노출되므로, 민감한 사이트를 연결할 때는 사전 검토가 필요합니다.",
- 8:"<code>Build &gt; Add tool &gt; Model Context Protocol (MCP)</code> 카탈로그에서 필요한 도구를 연결합니다. MCP 도구는 런타임에 실제로 호출되는 지점이므로, 5장(리스크 탐지)·6장(런타임 보호)·7장(트래픽 모니터링)에서 <b>탐지·보호·로깅의 실제 대상</b>이 됩니다.",
+ 8:"<code>Build &gt; Add tool &gt; Model Context Protocol (MCP)</code> 카탈로그에서 필요한 도구를 연결합니다. MCP 도구는 런타임에 실제로 호출되는 지점이므로, 4장(리스크 탐지)·6장(런타임 보호)·7장(트래픽 모니터링)에서 <b>탐지·보호·로깅의 실제 대상</b>이 됩니다.",
  9:"Preview(테스트) 패널에서 한국어 프롬프트로 실행해 지식 인용과 도구 호출이 정상인지 확인합니다. 단, 테스트 패널에서 발생한 활동은 2장에서 보는 <b>활성 사용자·세션 통계에는 집계되지 않습니다</b>. 실제 사용량 확인은 게시된 채널에서 실행한 결과로 판단해야 합니다.",
  10:"구성이 끝나면 게시 다이얼로그에서 채널 추가를 시작합니다. 게시는 '에이전트를 저장하는 것'이 아니라 <b>사용자에게 노출될 경로를 여는 것</b>이라는 점을 구분합니다.",
  11:"채널 선택기에서 <b>Teams 및 Microsoft 365 Copilot</b>을 선택합니다. 이 채널이 연결되어 있어야 이후 1장의 조직 카탈로그 배포, 3장의 차단 결과를 사용자 화면에서 확인할 수 있습니다.",
@@ -46,15 +46,15 @@ DESC = {
  17:"제출 후에는 <b>승인 대기</b> 상태로 표시됩니다. 새로 고침으로 요청 상태를 확인하며, 이 시점부터는 제작자가 아니라 AI 관리자의 작업(1장)으로 넘어갑니다.",
 
  19:"AI 관리자 계정으로 <code>Microsoft 365 관리 센터 &gt; 에이전트 &gt; 모든 에이전트 &gt; 요청</code>으로 이동해 ① 요청 목록에서 ② 대상 요청을 엽니다. 이 메뉴가 보이지 않으면 Entra에서 <b>AI 관리자</b> 역할이 할당되었는지 먼저 확인합니다.",
- 20:"요청 상세에서 ① <b>Microsoft Store에 게시</b> 버튼을 선택해 게시 마법사를 시작합니다. 이 화면에서 제작자·업무 목적·지식·도구·요청 권한을 검토하고, 부적절하면 제출을 거부할 수 있습니다. 상세 화면은 여러 탭으로 구성되며, 각 탭에서 다음을 확인합니다 — <b>세부 정보</b>: 제작자·소유자·업무 목적·게시 채널, <b>데이터 &amp; 도구</b>: 연결된 지식 원본과 MCP 도구 목록, <b>보안</b>: 인증·신뢰 경계 설정, <b>사용 권한</b>: 에이전트가 요청하는 API/커넥터 권한.<br><br><b>보안·AX 담당자 전사 게시 전 체크리스트</b><br>• 에이전트의 <b>목적·지침 대비 적정한 MCP 도구</b>만 연결되어 있는가(불필요한 광범위 도구 없음)<br>• 지식 원본이 <b>민감 사이트·과도한 범위</b>를 포함하지 않는가<br>• 요청 권한이 업무 목적에 비해 <b>과도하지 않은가</b>(최소 권한)<br>• 제작자·소유자가 <b>식별·검증</b> 가능한가<br>부적절한 경우 승인을 보류하고 제작자에게 수정 요청 후 재제출받습니다.",
+ 20:"요청 상세에서 ① <b>Microsoft Store에 게시</b> 버튼을 선택해 게시 마법사를 시작합니다. 이 화면에서 제작자·업무 목적·지식·도구·요청 권한을 검토하고, 부적절하면 제출을 거부할 수 있습니다.<br><br><b>보안·AX 담당자 전사 게시 전 체크리스트</b> (상세 화면의 각 탭에서 확인)<br>• <b>세부 정보</b> — 제작자·소유자·업무 목적·게시 채널을 확인하고, <b>제작자·소유자가 식별·검증 가능한가</b><br>• <b>데이터 &amp; 도구</b> — 연결된 지식 원본과 MCP 도구 목록을 확인하고, <b>목적·지침 대비 적정한 MCP 도구만 연결되어 있는가</b>(불필요한 광범위 도구 없음), <b>지식 원본이 민감 사이트·과도한 범위를 포함하지 않는가</b><br>• <b>사용 권한</b> — 에이전트가 요청하는 API/커넥터 권한이 <b>업무 목적에 비해 과도하지 않은가</b>(최소 권한)<br>부적절한 경우 승인을 보류하고 제작자에게 수정 요청 후 재제출받습니다.",
  21:"① 설치 가능 대상과 ② 사전 설치 대상을 지정한 뒤 ③ 다음으로 진행합니다. <b>설치 가능</b>은 사용자가 원할 때 직접 추가하는 방식이고, <b>사전 설치</b>는 대상 사용자에게 자동으로 배포되는 방식이므로 영향 범위가 다릅니다.",
  22:"배포 시 적용될 앱 정책 템플릿을 확인합니다. 조직에 이미 적용 중인 앱 설정 정책이 있는 경우 여기서 함께 확인됩니다.",
- 23:"권한 검토 화면입니다. 이 사례에서는 <b>필요한 권한 없음</b>으로 표시됐지만, 이는 에이전트의 모든 MCP 도구가 무권한으로 실행된다는 뜻이 <b>아닙니다</b>. 도구별 인증·동의는 별도로 적용되며, 실제 데이터 접근은 도구 수준에서 다시 통제됩니다.<br><br><b>참고 —</b> 현재 <b>Copilot Studio 에이전트</b>는 GCC·Standard 환경 모두에서 <b>생성 시점에 API 권한(위임/애플리케이션 권한)을 직접 부여하지 못합니다</b>. 따라서 이 화면에 요청 권한이 비어 있는 것은 정상이며, 실제 권한은 각 도구·커넥터를 사용할 때 <b>런타임에 사용자 동의·연결 단위로 부여</b>됩니다.",
+ 23:"권한 검토 화면입니다. 이 사례에서는 <b>필요한 권한 없음</b>으로 표시됐지만, 이는 에이전트의 모든 MCP 도구가 무권한으로 실행된다는 뜻이 <b>아닙니다</b>. 도구별 인증·동의는 별도로 적용되며, 실제 데이터 접근은 도구 수준에서 다시 통제됩니다.<br><br><b>Note —</b> <b>Copilot Studio 에이전트</b>는 <b>생성 시점에 API 권한(위임/애플리케이션 권한)을 직접 부여하지 않으며</b>, 실제 권한은 각 도구·커넥터를 사용할 때 <b>런타임에 사용자 동의·연결 단위로 부여</b>됩니다. 따라서 이 화면에 요청 권한이 비어 있는 것은 정상입니다. 반면 <b>Copilot Studio 이외의 플랫폼·방법으로 생성된 에이전트</b>는 요청 권한이 함께 넘어올 수 있으므로, 그런 경우 이 <b>권한 검토 화면에서 요청 권한의 적정성을 확인</b>하면 됩니다.",
  24:"최종 검토 화면에서 대상·권한·정책을 한 번 더 확인한 뒤 게시합니다.",
  25:"관리자 처리가 완료된 상태입니다. 배포 직후에는 Teams / Microsoft 365 Copilot 사용자 화면에 반영되기까지 시간이 걸릴 수 있으므로, 사용자 실행 확인은 잠시 후 다시 시도합니다.",
 
  27:"① <code>에이전트 &gt; 모든 에이전트 &gt; 레지스트리</code>로 이동해 ② <b>Platform = Copilot Studio</b>로 필터링합니다. 레지스트리는 테넌트에 등록된 에이전트의 단일 목록이며, <b>등록되어 있다는 사실이 실제로 사용 중이라는 뜻은 아닙니다</b>.",
- 28:"에이전트 상세의 <b>세부 정보</b>에서 소유자, 게시 채널, 상태, 그리고 해당 에이전트의 <b>Entra Agent ID</b>를 확인합니다. 이 Agent ID는 4장에서 조건부 액세스 대상으로 지정하고 로그인 로그와 대조할 때 사용하는 핵심 식별자입니다. 지식·도구(Data &amp; tools) 구성은 여기서 조회만 하고, 변경은 Copilot Studio에서 수행합니다.",
+ 28:"에이전트 상세의 <b>세부 정보</b>에서 소유자, 게시 채널, 상태, 그리고 해당 에이전트의 <b>Entra Agent ID</b>를 확인합니다. 이 Agent ID는 5장에서 조건부 액세스 대상으로 지정하고 로그인 로그와 대조할 때 사용하는 핵심 식별자입니다. 지식·도구(Data &amp; tools) 구성은 여기서 조회만 하고, 변경은 Copilot Studio에서 수행합니다.",
  29:"① 조회 기간을 지정하고 ② 활성 사용자·세션 지표를 확인합니다. 관리 센터의 활성 지표는 <b>게시된 채널에서 발생한 실사용</b>을 기준으로 집계됩니다.",
  30:"Copilot Studio의 <b>모니터</b>에서 세션·사용자 추이를 확인합니다. ① 조회 기간, ② 활성 사용자 보기를 확인하되 <b>기본 시간대가 UTC</b>인 점과 <b>테스트 패널 활동이 제외</b>되는 점을 감안해 해석합니다.",
 
@@ -80,7 +80,7 @@ DESC = {
  51:"정책 템플릿을 선택합니다. 에이전트 전용 템플릿을 선택하면 에이전트 활동 지표가 기본 세트로 구성됩니다.",
  52:"① 정책 이름, ② 설명, ③ 다음 순으로 입력합니다. 이름에 적용 범위를 드러내면 이후 경고 분류에 도움이 됩니다.",
  53:"정책을 적용할 에이전트 범위를 지정합니다. 현재 UI에서는 ① <b>모든 에이전트</b>가 선택되어 있고 ② 특정 에이전트 선택은 비활성화되어 있습니다. 따라서 정책 이름에 Demo가 들어 있어도 <b>단일 에이전트 범위가 아니라 테넌트 전체 범위</b>로 적용된다는 점에 유의합니다.",
- 54:"우선순위로 다룰 콘텐츠(민감도 레이블·사이트·파일 유형 등)를 선택합니다(①②). <b>우선순위 콘텐츠 지정 여부는 위험 점수 산정에 직접 영향</b>을 줍니다 — 우선순위로 지정한 콘텐츠(예: 민감도 레이블이 높은 문서, 특정 SharePoint 사이트)에 에이전트가 접근·조작하면 <b>더 높은 위험 가중치</b>가 부여되어 경고 심각도가 올라가고 더 쉽게 트리거됩니다. 지정하지 않으면 모든 콘텐츠가 동일 가중치로 평가되어 <b>중요 자산에 대한 위험 활동이 상대적으로 묻힐 수</b> 있습니다. 따라서 조직의 핵심 자산을 우선순위로 지정해 탐지 민감도를 집중시키는 것이 좋습니다.",
+ 54:"우선순위로 다룰 콘텐츠(민감도 레이블·사이트·파일 유형 등)를 선택합니다(①②).<br><br><b>Note —</b> <b>우선순위 콘텐츠 지정 여부는 위험 점수 산정에 직접 영향</b>을 줍니다. 우선순위로 지정한 콘텐츠(예: 민감도 레이블이 높은 문서, 특정 SharePoint 사이트)에 에이전트가 접근·조작하면 <b>더 높은 위험 가중치</b>가 부여되어 경고 심각도가 올라가고 더 쉽게 트리거됩니다. 지정하지 않으면 모든 콘텐츠가 동일 가중치로 평가되어 <b>중요 자산에 대한 위험 활동이 상대적으로 묻힐 수</b> 있습니다. 따라서 조직의 핵심 자산을 우선순위로 지정해 탐지 민감도를 집중시키는 것이 좋습니다.",
  55:"앞서 선택한 콘텐츠 각각에 대해 세부 항목을 추가로 지정합니다(①~④). 우선순위 콘텐츠는 위험 점수 가중치에 직접 영향을 줍니다.",
  56:"알림(경고)을 생성할 범위를 지정합니다(①②).",
  57:"경고를 유발할 이벤트 트리거를 선택합니다(①②). 에이전트의 어떤 행위를 위험 신호의 시작점으로 볼 것인지 정하는 단계입니다.",
@@ -90,7 +90,7 @@ DESC = {
  61:"최종 검토 후 정책을 생성합니다.",
  62:"정책 생성이 완료된 상태입니다. <b>정책 생성 후 실제 경고가 표시되기까지 최대 24시간이 걸릴 수 있습니다.</b>",
  63:"<code>내부 위험 관리 &gt; 에이전트 &gt; 경고</code>에서 ① 시간·상태·심각도 필터, ② 항목 수, ③ 결과를 확인합니다. 이 실습 시점에서는 <b>사용 가능한 경고가 0건</b>이었고 경보 상세·활동 탐색기·증거는 열 수 없었습니다. 이 경우 임계값과 감사 수집 상태, 에이전트 실사용량을 먼저 점검하는 것이 순서입니다.",
- 64:"경고가 생성된 경우의 확인 경로입니다(①~③). 대상 에이전트, 심각도, 활동 순서를 함께 확인해 어떤 도구 호출이 위험 신호로 잡혔는지 추적합니다.<br><br><b>IRM 경고(이벤트) 분석 방법</b><br>① <b>경고 상세</b>를 열어 트리거된 지표·심각도·관련 사용자/에이전트를 확인합니다.<br>② <b>활동 탐색기(Activity explorer)</b>에서 해당 에이전트의 활동 타임라인을 열어, 경고 전후의 파일 접근·도구 호출·데이터 이동 순서를 재구성합니다.<br>③ 경고에 첨부된 <b>증거(파일·도구·콘텐츠)</b>로 실제 어떤 자산이 관련됐는지 확인합니다.<br>④ 심층 분석이 필요하면 Defender의 <b>고급 헌팅(Advanced Hunting)</b>에서 <code>CloudAppEvents</code>(에이전트 활동)·<code>AlertInfo</code>·<code>AlertEvidence</code> 테이블을 KQL로 상관 분석해 근본 원인과 영향 범위를 추적합니다.",
+ 64:"경고가 생성된 경우의 확인 경로입니다(①~③). <b>심각도</b>를 기준으로 에이전트 활동과 관련해 <b>어떤 리스크가 탐지되었는지</b>를 확인합니다.",
 
  66:"<code>Defender &gt; 설정 &gt; AI 보안 &gt; 시작</code>에서 ①~③ 순으로 이동한 뒤 <b>Microsoft 365 커넥터</b>를 구성합니다. 이 커넥터가 Agent 365·Microsoft 365 활동과 Entra 관리 이벤트를 수집하는 입구 역할을 합니다. <b>애플리케이션 관리자 / 보안 관리자</b> 역할이 필요합니다.",
  67:"수집할 구성 요소를 선택합니다(①②). Agent 365와 Microsoft 365가 모두 연결 대상인지 확인합니다.",
@@ -106,13 +106,13 @@ DESC = {
  77:"정책 이름과 적용 범위를 지정합니다(①②).",
  78:"탐지 대상과 조치(Block/Audit)를 지정합니다(①~③).",
  79:"정책 검토 후 생성합니다. 실시간 보호의 감사·차단 이벤트는 <b>동작(behavior)</b>으로 <code>BehaviorInfo</code> 테이블에 기록되며, <b>Prompt Shields for Foundry</b>와 <b>Copilot Agent Builder</b>의 차단 이벤트도 동작으로 기록됩니다. 다만 <b>Copilot Studio로 빌드된 에이전트의 차단 이벤트는 아직 지원되지 않습니다</b>(<a class='xref-ext' href='https://learn.microsoft.com/ko-kr/defender-xdr/security-for-ai/ai-agent-real-time-protection#how-real-time-protection-works' target='_blank' rel='noopener'>공식 문서 · 실시간 보호 작동 방식</a>).",
- 80:"<b>프롬프트 증거 수집</b> 설정입니다. 켜면 경고 조사 시 실제 프롬프트 내용을 근거로 볼 수 있지만, 프롬프트 본문이 저장되므로 민감정보 취급 정책과 함께 검토해야 합니다.<br><br><b>탐지 가능한 이벤트와 로그·경고 확인</b><br>Defender는 Agent 365 관측 데이터를 분석해 <b>탈옥(jailbreak) 시도, 간접 프롬프트 인젝션(XPIA), 악성 콘텐츠 전파, 비밀·자격 증명 유출, 회피 기법, LLM 정찰, 의심스러운 사용자·IP 접근</b> 등을 준실시간으로 탐지합니다. 관련 이벤트는 다음에서 확인합니다 — <b>Defender 포털의 사건·경고</b>(준실시간 탐지), 고급 헌팅의 <code>AlertInfo</code>(경고 메타데이터)·<code>BehaviorInfo</code>(실시간 보호 감사·차단 동작)·<code>CloudAppEvents</code>(에이전트 활동·도구 호출)·<code>AlertEvidence</code>(관련 엔터티). 자세한 탐지·조사 방법은 <a class='xref-ext' href='https://learn.microsoft.com/ko-kr/defender-xdr/security-for-ai/ai-agent-detection-protection' target='_blank' rel='noopener'>AI 에이전트 위협 탐지 및 조사(공식 문서)</a>를 참고하세요.",
+ 80:"<b>프롬프트 증거 수집</b> 설정입니다. 켜면 경고 조사 시 실제 프롬프트 내용을 근거로 볼 수 있지만, 프롬프트 본문이 저장되므로 민감정보 취급 정책과 함께 검토해야 합니다.",
 
  82:"<code>Power Platform 관리 센터 &gt; 보안 &gt; ID 및 액세스 &gt; 에이전트에 대한 전역 보안 액세스</code>로 이동합니다(①~③). <b>전역 보안 액세스 관리자</b> 역할이 필요합니다.",
  83:"① 실습 환경을 선택하고 ② 설정을 엽니다. GSA 적용도 <b>환경 단위</b>이므로 같은 환경의 다른 에이전트에도 함께 영향이 갑니다.",
  84:"① <b>Enable</b>을 On으로 바꾸고 ② 저장합니다. 이 시점부터 해당 환경 에이전트의 아웃바운드 트래픽이 Global Secure Access를 경유합니다.",
  85:"<code>Entra &gt; 전역 보안 액세스 &gt; 모니터링</code>에서 활성화 상태를 확인합니다(①②).",
- 86:"<b>Gen AI 인사이트 로그</b>에서 에이전트가 실제로 주고받은 트래픽을 조회합니다(①②). <b>Event ID·Transaction ID로 상관 분석</b>하면 하나의 실행에 대한 요청·응답을 이어서 볼 수 있으며, MCP <code>tools/call</code>의 요청 본문과 응답까지 확인할 수 있습니다. 로그 반영에는 지연이 있을 수 있습니다.",
+ 86:"<b>Gen AI 인사이트 로그</b>에서 에이전트가 실제로 주고받은 트래픽을 조회합니다. <b>Event ID·Transaction ID로 상관 분석</b>하면 하나의 실행에 대한 요청·응답을 이어서 볼 수 있으며, MCP <code>tools/call</code>의 요청 본문과 응답까지 확인할 수 있습니다. 로그 반영에는 지연이 있을 수 있습니다.",
 }
 
 # Real, copyable code blocks that replace a code screenshot on a slide.
@@ -125,6 +125,156 @@ r'''.\Create-CopilotWebhookApp.ps1 `
   -FICName "ProductionFIC"'''),
 }
 
+# Override the displayed figure title for specific slides (unify section name before dash).
+TITLE_OVERRIDE = {
+ 60: "에이전트 정책 생성 — 위험 점수 부스터",
+}
+
+# Extra example figures appended after a slide's note (raw HTML).
+EXTRA = {
+ 20: """
+      <figure class="fig">
+        <div class="fig-title"><span class="fig-num" style="background:var(--surface-2);color:var(--text-soft);">예시</span>데이터 &amp; 도구 탭 — 지식·도구 확인 화면</div>
+        <a href="img/admin-tab-datatools.png" target="_blank" rel="noopener"><img loading="lazy" src="img/admin-tab-datatools.png" alt="관리자 승인 상세 - 데이터 및 도구 탭 예시"></a>
+        <figcaption class="fig-cap">각 탭을 열면 이렇게 항목별 상세가 표시됩니다. 예: <b>데이터 &amp; 도구</b> 탭에서는 <b>기능</b>(읽을 수 있음·그래프 커넥터), <b>지식</b>(참조 자료), <b>도구</b>(연결된 MCP 서버 목록·설명)를 확인해 목적 대비 적정성을 검토합니다.</figcaption>
+      </figure>""",
+ 64: """
+      <figure class="fig" id="s64-2">
+        <div class="fig-title"><span class="fig-num">3-2</span>에이전트 경고 확인 — 경고 상세 (지표·심각도·관련 엔터티)</div>
+        <a href="img/irm-3-2.png" target="_blank" rel="noopener"><img loading="lazy" src="img/irm-3-2.png" alt="경고 상세 - 지표·심각도·관련 엔터티"></a>
+      </figure>
+      <div class="note">① 경고를 열어 <b>심각도·위험 점수</b>를 확인하고, ② 우측 <b>경고 세부 정보</b> 패널에서 해당 경고와 연관된 <b>이벤트와 에이전트</b>를 파악합니다.</div>
+      <figure class="fig" id="s64-3">
+        <div class="fig-title"><span class="fig-num">3-3</span>에이전트 경고 확인 — 활동 탐색기 (활동·프롬프트·응답 세부)</div>
+        <a href="img/irm-3-3.png" target="_blank" rel="noopener"><img loading="lazy" src="img/irm-3-3.png" alt="활동 탐색기 - 활동·프롬프트·응답 세부"></a>
+      </figure>
+      <div class="note">① <b>활동 탐색기</b>에서 개별 활동을 선택하면 우측 상세 패널에 <b>활동 세부 정보</b>(작업·워크로드·AI 애플리케이션)와 함께, ② <b>프롬프트 세부 정보</b>(실제 입력 프롬프트·프롬프트 ID), ③ <b>응답 세부 사항</b>(응답 ID·중요한 정보 유형)이 표시됩니다. 이를 통해 <b>어떤 프롬프트가 어떤 응답·리소스로 이어졌는지</b>를 활동 종류별로 추적할 수 있습니다. <span class="hl-note">프롬프트·응답 원문은 <b>내부 위험 관리 조사자</b> 역할을 가진 사용자만 볼 수 있습니다.</span></div>
+      <figure class="fig" id="s64-4">
+        <div class="fig-title"><span class="fig-num">3-4</span>에이전트 경고 확인 — 에이전트 활동·증거 (관련 자산 식별)</div>
+        <a href="img/irm-3-4.png" target="_blank" rel="noopener"><img loading="lazy" src="img/irm-3-4.png" alt="에이전트 활동 - 증거·관련 자산"></a>
+      </figure>
+      <div class="note">① <b>에이전트 활동</b> 탭에서 ② 각 이벤트의 <b>증거</b>(예: 응답에 포함된 민감 정보 유형 — All Full Names·Diseases·Medical Terms 등)를 확인해 실제 어떤 자산·콘텐츠가 관련됐는지 식별합니다.</div>""",
+ 80: """
+      <figure class="fig" id="s80-2">
+        <div class="fig-title"><span class="fig-num">6-1</span>런타임 탐지 시나리오 — 탐지 경고 목록 (Defender 경고)</div>
+        <a href="img/rt-alerts.png" target="_blank" rel="noopener"><img loading="lazy" src="img/rt-alerts.png" alt="Defender 경고 목록 - AI 탐지"></a>
+      </figure>
+      <div class="note"><code>Defender 포털 &gt; 사건 &amp; 경고 &gt; 경고</code>에서 준실시간 탐지 결과를 확인합니다. 조회 기간과 경고 건수를 확인하고, 목록에서 <b>AI agent abuse</b>·<b>프롬프트 인젝션(XPIA)</b> 등 AI 관련 경고를 찾습니다. Defender는 Agent 365 관측 데이터를 분석해 <b>탈옥(jailbreak)·간접 프롬프트 인젝션·악성 콘텐츠 전파·비밀 유출·회피 기법·LLM 정찰·의심 IP 접근</b> 등을 탐지합니다.</div>
+      <figure class="fig" id="s80-3">
+        <div class="fig-title"><span class="fig-num">6-2</span>런타임 탐지 시나리오 — 경고 세부사항 (활동 세부 정보 필드)</div>
+        <a href="img/rt-detail.png" target="_blank" rel="noopener"><img loading="lazy" src="img/rt-detail.png" alt="경고 세부사항 - 에이전트·활동·증거"></a>
+      </figure>
+      <div class="note">경고를 클릭한 뒤 <b>활동 세부 정보</b> 탭을 열면(위 화면), 해당 탐지의 원천 데이터를 필드 단위로 확인할 수 있습니다. 대표 필드는 다음과 같습니다.<br><br>• <b>에이전트 식별</b> — <code>AgentName</code>·<code>AgentID</code>·<code>PlatformAgentType</code>(예: AzureAIFoundry)·<code>AgentBlueprintID</code>·<code>ChannelName</code>(예: msteams:COPILOT): <b>어떤 에이전트가 어떤 플랫폼·채널에서</b> 동작했는지<br>• <b>세션·요청</b> — <code>ConversationId</code>·<code>RequestId</code>·<code>ResponseId</code>·<code>RequestMessages</code>: 실제 <b>요청/응답과 대화 맥락</b><br>• <b>도구 호출</b> — <code>ToolName</code>(예: mcp_WorkIQWord.GetDocumentContent)·<code>ToolType</code>·<code>ToolID</code>·<code>ToolOutput</code>: 에이전트가 호출한 <b>도구와 그 출력</b>(주입 콘텐츠 포함)<br>• <b>위협 분류</b> — <code>MitreAtlasTactics/Techniques</code>·<code>OWASPCategory</code>·<code>PotentialCauses</code>: <b>어떤 공격 기법·원인</b>으로 분류됐는지<br><br>즉 이 탭 하나에서 <b>어떤 에이전트가, 어떤 채널에서, 어떤 도구를 호출해, 어떤 위협으로 탐지됐는지</b>를 한 번에 파악할 수 있습니다. 우측 <b>세부 정보</b> 패널에서는 심각도·상태·경고 ID·범주 등 경고 메타데이터를 확인합니다.</div>
+      <figure class="fig" id="s80-4">
+        <div class="fig-title"><span class="fig-num">6-3</span>런타임 탐지 시나리오 — AlertInfo (고급 헌팅)</div>
+        <a href="img/rt-alertinfo.png" target="_blank" rel="noopener"><img loading="lazy" src="img/rt-alertinfo.png" alt="고급 헌팅 AlertInfo"></a>
+      </figure>
+      <div class="note">고급 헌팅의 <code>AlertInfo</code> 테이블을 KQL로 조회해 AI 경고를 메타데이터 기준으로 필터링·집계합니다. 포털 경고 목록보다 유연하게 상관 분석·사용자 지정 탐지를 만들 수 있습니다.<br><br><b>주요 컬럼과 조회 가능 정보</b><br>• <code>Timestamp</code> — 경고 발생 시각(기간 필터·추이 분석)<br>• <code>Title</code> — 경고 제목(예: <i>AI agent abuse</i>, <i>A cross or external prompt Injection attack (XPIA)…</i>)<br>• <code>Severity</code> — 심각도(Informational·Low·Medium·High)<br>• <code>Category</code> — 공격 범주(예: InitialAccess·DefenseEvasion)<br>• <code>ServiceSource</code>·<code>DetectionSource</code> — 어떤 서비스·엔진이 탐지했는지(예: Microsoft Security for AI, Defender XDR)<br>• <code>AlertId</code> — 경고 고유 ID(<code>AlertEvidence</code>·<code>AlertInfo</code> 조인 키)<br>이를 통해 <b>어떤 유형의 AI 위협이, 언제, 어떤 심각도로, 어떤 엔진에 의해</b> 탐지됐는지를 집계·상관 분석할 수 있습니다.</div>
+      <div class="code"><div class="code-head"><span>KQL — 최근 30일 AI 관련 경고 조회</span><button class="copy-btn" type="button">복사</button></div><pre><code>AlertInfo
+| where Timestamp &gt; ago(30d)
+| where Title has_any ("agent","prompt","injection","AI")
+| project Timestamp, Title, Severity, Category, ServiceSource, DetectionSource, AlertId
+| order by Timestamp desc</code></pre></div>
+      <div class="code"><div class="code-head"><span>KQL — 경고 유형·심각도별 집계</span><button class="copy-btn" type="button">복사</button></div><pre><code>AlertInfo
+| where Timestamp &gt; ago(30d)
+| where Title has_any ("agent","prompt","injection","AI")
+| summarize Count = count() by Title, Severity, Category
+| order by Count desc</code></pre></div>
+      <figure class="fig" id="s80-5">
+        <div class="fig-title"><span class="fig-num">6-4</span>런타임 탐지 시나리오 — CloudAppEvents (고급 헌팅)</div>
+        <a href="img/rt-cloudapp.png" target="_blank" rel="noopener"><img loading="lazy" src="img/rt-cloudapp.png" alt="고급 헌팅 CloudAppEvents"></a>
+      </figure>
+      <div class="note"><code>CloudAppEvents</code> 테이블(Agent 365 관측 데이터)을 <code>ActionType == "ExecuteToolByGateway"</code>로 필터링해 에이전트의 <b>실제 도구 호출</b>을 조회합니다. 경고(<code>AlertInfo</code>)·증거(<code>AlertEvidence</code>)와 상관 분석하면 하나의 실행 흐름을 재구성할 수 있습니다.<br><br><b>주요 컬럼과 조회 가능 정보</b><br>• <code>Timestamp</code> — 도구 호출 시각<br>• <code>ActionType</code> — 작업 유형(에이전트 도구 호출은 <code>ExecuteToolByGateway</code>)<br>• <code>Application</code>·<code>AccountDisplayName</code>·<code>AccountObjectId</code> — 어떤 앱·실행 계정이 호출했는지<br>• <code>IPAddress</code>·<code>CountryCode</code> — 호출 출처 IP·국가<br>• <code>RawEventData</code> — 도구 호출의 원천 JSON. 여기에 <code>ToolServerName</code>(MCP 서버명)·<code>ServerAddress</code>·<code>AgentName</code>·<code>ToolName</code>·<code>ToolDescription</code>·<code>Operation</code>·<code>ErrorMessage</code> 등 <b>실제 호출된 도구와 파라미터·결과</b>가 담깁니다<br>이를 통해 <b>어떤 에이전트가 어떤 MCP 도구를, 어디서(IP·국가), 어떤 앱·계정으로 호출했는지</b>를 활동 단위로 추적할 수 있습니다. <span class="hl-note">참고: 실시간 보호의 감사·차단 동작은 <code>BehaviorInfo</code>에 기록되지만, <b>Copilot Studio 에이전트의 차단 이벤트는 아직 지원되지 않습니다</b>.</span></div>
+      <div class="code"><div class="code-head"><span>KQL — 최근 에이전트 도구 호출 조회</span><button class="copy-btn" type="button">복사</button></div><pre><code>CloudAppEvents
+| where Timestamp &gt; ago(7d)
+| where ActionType == "ExecuteToolByGateway"
+| project Timestamp, Application, AccountDisplayName, IPAddress, CountryCode, RawEventData
+| order by Timestamp desc</code></pre></div>
+      <div class="code"><div class="code-head"><span>KQL — RawEventData에서 도구·서버 추출</span><button class="copy-btn" type="button">복사</button></div><pre><code>CloudAppEvents
+| where Timestamp &gt; ago(7d)
+| where ActionType == "ExecuteToolByGateway"
+| extend d = todynamic(RawEventData)
+| project Timestamp,
+          AgentName = tostring(d.AgentName),
+          ToolServerName = tostring(d.ToolServerName),
+          ToolName = tostring(d.ToolName),
+          Operation = tostring(d.Operation),
+          ErrorMessage = tostring(d.ErrorMessage),
+          IPAddress, CountryCode
+| order by Timestamp desc</code></pre></div>""",
+}
+
+# 챕터 intro 표에 덱 외 추가 행(항목, 설정 위치, 확인 포인트)과 점프 대상
+EXTRA_ROWS = {
+    "ch6": [
+        (["6", "런타임 탐지 시나리오", "Defender > 사건 & 경고 / 고급 헌팅(AlertInfo·CloudAppEvents)",
+          "실제 에이전트 실행에서 발생한 위험 신호를 준실시간 탐지·조사"], "s80-2"),
+    ],
+}
+
+CH5_TABLE = [
+    ["#", "항목", "설정 위치", "확인 포인트", ""],
+    ["0", "역할/권한 준비", "Entra 관리 센터 > 역할 및 관리자 > 조건부 액세스 관리자",
+     "정책 생성 전 조건부 액세스 관리자 역할 확인", ""],
+    ["1", "사용자 차단 정책 생성", "조건부 액세스 > 정책 > 새 정책 (사용자 / 대상 리소스 / 네트워크 / 액세스 제어)",
+     "모든 사용자 → Copilot Studio 에이전트, 사외(비신뢰 네트워크)에서 액세스 차단 → 정책 On", "sca1"],
+    ["2", "실제 차단·정책 평가 확인", "Teams / M365 Copilot에서 에이전트 실행 후 Entra > 모니터링 및 상태 > 로그인 로그",
+     "사외에서 Copilot Studio 에이전트 실행이 실제로 차단되는지, 로그인 로그의 CA 결과를 확인", "sca7"],
+]
+
+CH5_FIGS = [
+    ("sca1", "1-1", "사용자 차단 정책 생성 — 조건부 액세스 새 정책 만들기", "img/ca-5-1a.png",
+     "① <b>Entra ID</b>에서 ② <b>조건부 액세스</b>로 이동해 ③ <b>새 정책 만들기</b>를 선택합니다. 이 작업에는 <b>조건부 액세스 관리자</b> 역할이 필요합니다."),
+    ("sca2", "1-2", "사용자 차단 정책 생성 — 정책 이름 및 행위자(사용자) 지정", "img/ca-5-2.png",
+     "① <b>정책 이름</b>을 지정합니다. 이름에 적용 대상·조건(예: <i>사외 위험 에이전트 사용 차단</i>)을 드러내면 이후 운영·감사에서 구분이 쉽습니다. ② 할당의 <b>사용자 또는 에이전트</b>에서 정책이 적용될 행위자를 지정하는데, 이번 시나리오는 <b>사용자가 에이전트를 사용하는 행위</b>를 통제하므로 ③ <b>모든 사용자</b>를 선택합니다(운영 시에는 특정 그룹으로 좁히는 것을 권장). 안내에 나오듯 사용자 기반 정책은 사용자가 직접 접근하거나 <b>사용자를 대신해 작동하는 에이전트를 통해</b> 접근할 때 함께 적용됩니다."),
+    ("sca3", "1-3", "사용자 차단 정책 생성 — 대상 리소스(에이전트) 지정", "img/ca-5-3.png",
+     "① <b>대상 리소스</b>에서 접근을 통제할 대상을 지정합니다. ② <b>리소스 선택 &gt; 특정 리소스 선택</b>에서 <code>Microsoft Copilot Studio agent identity blueprint</code>를 지정하면 <b>Copilot Studio로 만든 에이전트</b>가 접근 대상이 됩니다.<br><br><b>Note —</b> 현재 조건부 액세스 리소스 선택기에서 <b>개별 에이전트 ID는 '지원되지 않는 리소스'</b>로 표시되어 단일 에이전트만 개별적으로 지정할 수는 없습니다. 대신 위 <b>블루프린트</b>로 Copilot Studio 에이전트 전체를, 또는 <b>모든 에이전트 리소스</b>로 테넌트의 모든 에이전트를 대상으로 지정합니다."),
+    ("sca4", "1-4", "사용자 차단 정책 생성 — 네트워크 조건(사외) 지정", "img/ca-5-4.png",
+     "① <b>네트워크</b> 조건을 켜고 <b>포함</b>은 <b>모든 네트워크 또는 위치</b>로 둔 뒤, ② <b>제외</b> 탭에서 <b>모든 신뢰할 수 있는 네트워크 및 위치</b>를 제외합니다. 이렇게 하면 <b>사내(신뢰 네트워크)는 정책에서 빠지고, 사외(비신뢰 네트워크)에서 접근할 때만 정책이 적용</b>됩니다."),
+    ("sca4b", "예시", "명명된 위치 — 신뢰할 수 있는 위치 사전 정의 화면", "img/ca-5-nl.png",
+     "여기서 말하는 '신뢰할 수 있는 위치'는 <code>조건부 액세스 &gt; 관리 &gt; 명명된 위치</code>에서 회사 IP 대역 등을 등록하고 <b>신뢰할 수 있음 = 예</b>로 표시해 둔 위치입니다. 본 실습 테넌트에는 회사 IP 대역(예: <code>ME Services</code>·<code>Provisioning/Stockpiling/Teams Workers</code>)이 이미 신뢰 위치로 등록되어 있어, 이 대역 밖(사외)에서 접근할 때 앞의 정책이 적용됩니다."),
+    ("sca5", "1-5", "사용자 차단 정책 생성 — 액세스 제어(차단) 지정", "img/ca-5-5.png",
+     "① <b>액세스 제어 &gt; 허용</b>을 열고 ② <b>액세스 차단</b>을 선택합니다. 이 조합으로 '<b>모든 사용자</b>가 <b>사외</b>에서 <b>Copilot Studio 에이전트</b>에 접근하면 <b>차단</b>'이라는 정책이 완성됩니다."),
+    ("sca6", "1-6", "사용자 차단 정책 생성 — 정책 사용 지정 및 생성", "img/ca-5-6.png",
+     "정책 요약을 확인하고 ① <b>정책 사용</b>을 지정한 뒤 ② <b>만들기</b>로 생성합니다. 운영 반영 전 영향도를 먼저 보려면 <b>보고 전용(Report-only)</b>으로 만들어 로그로만 평가하고, <b>실제로 차단하려면 '설정(On)'으로 전환</b>합니다.<br><br><b>주의 —</b> <b>모든 사용자</b> + <b>차단</b> 조합은 광범위 영향을 줄 수 있으므로, 운영에서는 반드시 소규모 그룹으로 먼저 검증한 뒤 확대합니다."),
+    ("sca7", "2-1", "실제 차단 확인 — 사외에서 에이전트 실행 차단", "img/ca-5-7.png",
+     "정책을 <b>On</b>으로 둔 상태에서 <b>Teams / M365 Copilot</b>로 대상 Copilot Studio 에이전트를 <b>사외(비신뢰 네트워크)에서 실행</b>하면, 에이전트가 도구 호출을 위해 토큰을 요청하는 시점에 조건부 액세스가 이를 거부해 <b>실제로 차단</b>됩니다. 화면과 같이 <code>오류 코드: IntegratedAuthConditionalAccessBlocked</code> 메시지가 표시되며, 이는 <b>통합 인증이 조건부 액세스 정책에 의해 차단</b>됐음을 명시적으로 나타냅니다.<br><br><span class='hl-note'>참고: 조건부 액세스는 <b>새 토큰 요청 시</b> 평가되므로, 정책을 켠 직후 이미 로그인된 세션에서는 토큰 캐시로 인해 즉시 차단되지 않을 수 있습니다. 토큰이 갱신되거나 새 세션·새 도구 연결로 접근할 때 차단이 적용됩니다.</span>"),
+    ("sca8", "2-2", "정책 평가 확인 — 로그인 로그(조건부 액세스 결과)", "",
+     "<code>Entra &gt; 모니터링 및 상태 &gt; 로그인 로그</code>에서 <b>사용자 로그인(비대화형)</b> 탭을 열고, <b>조건부 액세스</b> 열(및 로그인 상세의 조건부 액세스 탭)에서 이 정책의 평가 결과를 확인합니다. 사외에서 대상 에이전트 리소스에 접근한 로그인은 이 정책에 의해 <b>실패(차단)</b>로 기록됩니다.<br><br>2-1의 차단(<code>IntegratedAuthConditionalAccessBlocked</code>)은 에이전트가 <b>사용자를 대신해(통합 인증/OBO)</b> 커넥터 토큰을 요청하다 막힌 것이라 <b>비대화형 로그인</b> 계열로 집계됩니다. <span class='hl-note'>참고: 비대화형 로그인 로그는 수집·반영까지 다소 지연될 수 있어, 차단 직후에는 로그가 보이지 않을 수 있습니다. 아래 화면은 로그 수집 후 추가할 예정입니다.</span>"),
+]
+
+def ch5_custom_html():
+    ths = "".join(f"<th>{esc(x)}</th>" for x in CH5_TABLE[0][:-1])
+    trs = []
+    for r in CH5_TABLE[1:]:
+        cells, tgt = r[:-1], r[-1]
+        tds = "".join("<td>" + esc(x).replace("\n", "<br>") + "</td>" for x in cells)
+        if tgt:
+            trs.append(f'<tr class="jump" data-target="{tgt}" tabindex="0">{tds}</tr>')
+        else:
+            trs.append(f"<tr>{tds}</tr>")
+    steps = []
+    for fid, label, title, img, note in CH5_FIGS:
+        if not img:
+            imgs_html = '<div class="ph">스크린샷 준비 중 — 로그 수집 후 추가 예정</div>'
+        else:
+            imgs_list = img if isinstance(img, (list, tuple)) else [img]
+            imgs_html = "".join(
+                f'<a href="{p}" target="_blank" rel="noopener"><img loading="lazy" src="{p}" alt="{esc(title)}"></a>'
+                for p in imgs_list)
+        if label == "예시":
+            numspan = '<span class="fig-num" style="background:var(--surface-2);color:var(--text-soft);">예시</span>'
+        else:
+            numspan = f'<span class="fig-num">{label}</span>'
+        steps.append(f"""
+      <figure class="fig" id="{fid}">
+        <div class="fig-title">{numspan}{esc(title)}</div>
+        {imgs_html}
+      </figure>
+      <div class="note">{note}</div>""")
+    return "".join(f"<th>{x}</th>" for x in []), ths, "".join(trs), "".join(steps)
+
+
 def title_of(n):
     for sh in deck[n-1]["shapes"]:
         if sh["kind"] == "text" and sh["name"] in ("제목 1",) or (sh["kind"]=="text" and "title" in sh["name"].lower()):
@@ -136,6 +286,7 @@ def esc(s): return html.escape(s)
 parts = []
 nav = []
 SKIP = {63}  # slides excluded from the guide
+PLACEHOLDER = {86}  # slides shown as placeholder (screenshot pending)
 for c in CH:
     nav.append(f'<a href="#{c["id"]}" data-sec="{c["id"]}"><span class="n">{c["num"]}</span><span>{esc(c["name"])}</span></a>')
 
@@ -147,11 +298,27 @@ def anchor_for(c, firstcol):
         if n in SKIP:
             continue
         t = title_of(n)
-        if t.startswith(f"{c['num']}-{fc}.") or t.startswith(f"{c['num']}-{fc} "):
+        if t.startswith(f"{c['orig']}-{fc}.") or t.startswith(f"{c['orig']}-{fc} "):
             return n
     return None
 
 for c in CH:
+    if c.get("custom") and c["id"] == "ch5":
+        _, ths, trs_html, steps_html = ch5_custom_html()
+        parts.append(f"""
+  <section id="{c['id']}" class="page">
+    <div class="hero">
+      <span class="tag">Chapter {c['num']} · Microsoft Agent 365</span>
+      <h1>{c['num']}. {esc(c['name'])}</h1>
+      <p>{c['lead']}</p>
+    </div>
+    <h2 class="ov-h">전체 순서 한눈에 보기</h2>
+    <div class="tw"><table><thead><tr>{ths}</tr></thead><tbody>{trs_html}</tbody></table></div>
+    <h2 class="ov-h">단계별 상세</h2>
+    {steps_html}
+    <div class="pagenav">__PN{c['num']}__</div>
+  </section>""")
+        continue
     tbl = [list(r) for r in table_of(c["intro"])]
     if tbl and not tbl[0][-1].strip():
         for r in tbl:
@@ -169,6 +336,12 @@ for c in CH:
             trs.append(f'<tr class="jump" data-target="s{anc}" tabindex="0">{tds}</tr>')
         else:
             trs.append(f"<tr>{tds}</tr>")
+    for row, tgt in EXTRA_ROWS.get(c["id"], []):
+        tds = "".join("<td>" + esc(x).replace("\n", "<br>") + "</td>" for x in row)
+        if tgt:
+            trs.append(f'<tr class="jump" data-target="{tgt}" tabindex="0">{tds}</tr>')
+        else:
+            trs.append(f"<tr>{tds}</tr>")
     steps = []
     substep = {}
     valid_steps = {int(r[0]) for r in tbl[1:] if r[0].strip().isdigit() and int(r[0]) > 0}
@@ -178,6 +351,7 @@ for c in CH:
             continue
         t = title_of(n)
         ct = re.sub(r'^\s*\d+\s*-\s*\d+(\s*[~∼]\s*\d+\s*-\s*\d+)?\.?\s*', '', t).strip().rstrip('|').strip()
+        ct = TITLE_OVERRIDE.get(n, ct)
         m = re.match(r'^\s*((?:\d+\s*-\s*\d+\s*[~∼]?\s*)+)', t)
         if m:
             pairs = re.findall(r'\d+\s*-\s*(\d+)', m.group(1))
@@ -196,7 +370,9 @@ for c in CH:
             code_html = (f'<div class="code"><div class="code-head"><span>{esc(lang)}</span>'
                          f'<button class="copy-btn" type="button">복사</button></div>'
                          f'<pre><code>{esc(src)}</code></pre></div>')
-        if os.path.exists(os.path.join(BASE, "img", f"slide-{n:02d}a.png")):
+        if n in PLACEHOLDER:
+            imgs = '<div class="ph">스크린샷 준비 중 — 로그 수집 후 추가 예정</div>'
+        elif os.path.exists(os.path.join(BASE, "img", f"slide-{n:02d}a.png")):
             imgs = "".join(
                 f'<a href="img/slide-{n:02d}{p}.png" target="_blank" rel="noopener"><img loading="lazy" src="img/slide-{n:02d}{p}.png" alt="{esc(ct)}"></a>'
                 for p in ("a", "b"))
@@ -208,7 +384,7 @@ for c in CH:
         {code_html}
         {imgs}
       </figure>
-      <div class="note">{d}</div>""")
+      <div class="note">{d}</div>{EXTRA.get(n, "")}""")
     parts.append(f"""
   <section id="{c['id']}" class="page">
     <div class="hero">
@@ -313,6 +489,10 @@ figure.fig img{display:block;width:100%;height:auto;border:1px solid var(--borde
 figure.fig a + a img{margin-top:14px;}
 .fig-title{display:flex;align-items:center;gap:10px;font-size:15.5px;font-weight:600;margin:0 0 10px;letter-spacing:-.2px;color:var(--text);}
 .fig-num{flex:0 0 auto;min-width:34px;height:26px;padding:0 9px;display:inline-flex;align-items:center;justify-content:center;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;font-size:13px;font-weight:700;letter-spacing:.2px;}
+.fig-cap{margin:8px 2px 0;font-size:13px;color:var(--text-soft);line-height:1.6;}
+.fig-cap b{color:var(--text);}
+.hl-note{display:block;margin-top:8px;padding-top:8px;border-top:1px dashed var(--border);color:var(--text-soft);}
+.ph{display:flex;align-items:center;justify-content:center;min-height:200px;border:2px dashed var(--border);border-radius:10px;color:var(--text-soft);font-size:14px;font-weight:600;background:repeating-linear-gradient(45deg,var(--surface-2),var(--surface-2) 10px,var(--surface) 10px,var(--surface) 20px);}
 .code{margin:14px 0 4px;border:1px solid var(--border);border-radius:10px;overflow:hidden;box-shadow:var(--shadow);}
 .code-head{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:var(--surface-2);border-bottom:1px solid var(--border);font-size:12.5px;font-weight:700;color:var(--text-soft);}
 .copy-btn{font:inherit;font-size:12px;font-weight:600;padding:4px 12px;border-radius:7px;border:1px solid var(--border);background:var(--surface);color:var(--text);cursor:pointer;}
@@ -390,13 +570,16 @@ document.querySelectorAll('tr.jump').forEach(row=>{
 document.querySelectorAll('.copy-btn').forEach(btn=>{
   btn.addEventListener('click',()=>{
     const code=btn.closest('.code').querySelector('code').innerText;
-    const done=()=>{btn.classList.add('done');const o=btn.textContent;btn.textContent='복사됨';setTimeout(()=>{btn.textContent=o;btn.classList.remove('done');},1500);};
-    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(code).then(done).catch(()=>{});}
-    else{const ta=document.createElement('textarea');ta.value=code;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(ta);done();}
+    const done=()=>{btn.classList.add('done');const o=btn.dataset.label||btn.textContent;btn.dataset.label=o;btn.textContent='복사됨';setTimeout(()=>{btn.textContent=o;btn.classList.remove('done');},1500);};
+    const fallback=()=>{const ta=document.createElement('textarea');ta.value=code;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.focus();ta.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(ta);done();};
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(code).then(done).catch(fallback);}
+    else{fallback();}
   });
 });
 document.querySelectorAll('.xref').forEach(a=>{
-  a.addEventListener('click',e=>{e.preventDefault();const el=document.getElementById(a.dataset.target);if(!el)return;el.scrollIntoView({behavior:'smooth',block:'start'});el.classList.remove('flash');void el.offsetWidth;el.classList.add('flash');});
+  a.addEventListener('click',e=>{e.preventDefault();const t=a.dataset.target;
+    if(ids.includes(t)){show(t,true);return;}
+    const el=document.getElementById(t);if(!el)return;el.scrollIntoView({behavior:'smooth',block:'start'});el.classList.remove('flash');void el.offsetWidth;el.classList.add('flash');});
 });
 const tt=document.getElementById('tt');
 tt.addEventListener('click',()=>{const c=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',c);try{localStorage.setItem('a365theme',c);}catch(e){}});
@@ -417,8 +600,8 @@ ROLES = [
  ("1", "승인 및 전사 배포", "AI 관리자", "Entra > 사용자 > 할당된 역할"),
  ("2", "인벤토리 확인", "AI 읽기 권한자", "Entra > 사용자 > 할당된 역할"),
  ("3", "에이전트 차단", "AI 관리자 · 에이전트 ID 관리자", "Entra > 사용자 > 할당된 역할"),
- ("4", "조건부 접근제어", "조건부 액세스 관리자", "Entra > 사용자 > 할당된 역할"),
- ("5", "리스크 탐지", "내부자 위험 관리 분석가 또는 조사자", "Purview > 역할 및 범위 > 역할 그룹"),
+ ("4", "리스크 탐지", "내부자 위험 관리 분석가 또는 조사자", "Purview > 역할 및 범위 > 역할 그룹"),
+ ("5", "조건부 접근제어", "조건부 액세스 관리자", "Entra > 사용자 > 할당된 역할"),
  ("6", "런타임 보호", "애플리케이션 관리자 · 보안 관리자 · Power Platform 관리자", "Entra > 역할 / Power Platform 관리 센터"),
  ("7", "트래픽 모니터링", "전역 보안 액세스 관리자", "Entra > 사용자 > 할당된 역할"),
 ]
@@ -437,7 +620,7 @@ overview = f"""
     <div class="hero">
       <span class="tag">Microsoft Agent 365 · Copilot Studio</span>
       <h1>Copilot Studio 에이전트</h1>
-      <p>Copilot Studio(New experience)에서 만든 에이전트를 안전하게 운영하기 위한 <b>기본 보안 설정</b>을 처음부터 끝까지 안내합니다. 에이전트 생성 → 승인·배포 → 인벤토리 → 차단 → 조건부 접근제어 → 리스크 탐지 → 런타임 보호 → 트래픽 모니터링까지, 각 단계에서 어떤 포털에 들어가 무엇을 설정하는지 스크린샷과 함께 순서대로 짚어 드립니다.</p>
+      <p>Copilot Studio(New experience)에서 만든 에이전트를 안전하게 운영하기 위한 <b>기본 보안 설정</b>을 처음부터 끝까지 안내합니다. 에이전트 생성 → 승인·배포 → 인벤토리 → 차단 → 리스크 탐지 → 조건부 접근제어 → 런타임 보호 → 트래픽 모니터링까지, 각 단계에서 어떤 포털에 들어가 무엇을 설정하는지 스크린샷과 함께 순서대로 짚어 드립니다.</p>
     </div>
     <p class="page-lead">이 가이드는 하나의 실습 환경에서 만든 데모 에이전트(<code>Agent365-Guide-Demo</code>)를 대상으로, 관리자·보안 담당자가 실제로 수행하는 구성 흐름을 재현합니다. 왼쪽 <b>구성 단계(0–7)</b> 목차에서 각 장으로 이동하고, 아래 표의 역할 행을 클릭하면 해당 단계로 바로 이동합니다.</p>
 
@@ -453,23 +636,25 @@ overview = f"""
     <div class="tw"><table><thead><tr><th>포털</th><th>이 가이드에서의 용도</th><th>바로가기</th></tr></thead><tbody>{portal_rows}</tbody></table></div>
 
     <h2 class="ov-h">단계별 필요한 역할 한눈에</h2>
-    <p class="ov-sub">각 단계를 수행하기 전에 아래 역할을 미리 할당해 두세요. 대부분 <b>Entra 관리 센터 &gt; 사용자 &gt; 할당된 역할 &gt; 할당 추가</b>에서 부여하며, 5장은 Purview 역할 그룹, 6장 일부는 Power Platform 관리자 지정이 필요합니다. 행을 클릭하면 해당 단계로 이동합니다.</p>
+    <p class="ov-sub">각 단계를 수행하기 전에 아래 역할을 미리 할당해 두세요. 대부분 <b>Entra 관리 센터 &gt; 사용자 &gt; 할당된 역할 &gt; 할당 추가</b>에서 부여하며, 4장은 Purview 역할 그룹, 6장 일부는 Power Platform 관리자 지정이 필요합니다. 행을 클릭하면 해당 단계로 이동합니다.</p>
     <div class="tw"><table><thead><tr><th>#</th><th>단계</th><th>필요한 역할</th><th>할당 위치</th></tr></thead><tbody>{role_rows}</tbody></table></div>
     <div class="note">역할은 <b>최소 권한 원칙</b>에 따라 필요한 단계에만 부여하고, 실습이 끝나면 회수하는 것을 권장합니다. AI 관리자·에이전트 ID 관리자·조건부 액세스 관리자 등은 테넌트 전체에 영향을 주는 상위 권한이므로 할당 대상을 신중히 관리하세요.</div>
 
     <h2 class="ov-h">0단계를 건너뛰고 바로 시작하기 · 에이전트 Import</h2>
-    <p class="ov-sub"><b>0. 에이전트 생성</b>을 건너뛰고 준비된 실습용 에이전트로 곧바로 Agent 365 기능(2~7단계)을 실습하려면, 아래 앱 패키지를 Teams에 업로드하세요. 이 패키지는 조직 배포(1단계)까지 완료된 상태로 제공되므로, 업로드 후 <b>2. 에이전트 인벤토리 확인</b>부터 바로 이어서 실습할 수 있습니다. 두 가지 방법으로 사용할 수 있습니다.</p>
+    <p class="ov-sub"><b>0. 에이전트 생성</b>을 건너뛰고 준비된 실습용 에이전트로 시작하려면, 아래 앱 패키지를 <b>Microsoft 365 관리 센터(MAC)</b>에 직접 업로드합니다. 업로드 이후에는 <a class="xref" data-target="ch1">1. 에이전트 승인 및 전사 배포</a> 절차를 그대로 이어서 진행해 전사에 게시한 뒤, 2장부터 관리·보안 기능을 실습합니다.</p>
     <a class="download-btn" href="files/Agent365-Guide-Demo.zip" download>⬇ 실습용 에이전트 패키지 내려받기 (Agent365-Guide-Demo.zip)</a>
-    <div class="method">
-      <div class="method-head"><span class="method-no">1</span> 나 / 소수만 테스트 — 사이드로드</div>
-      <p>Teams → <b>앱</b> → <b>앱 관리</b> → <b>앱 업로드</b> → <b>사용자 지정 앱 업로드</b>에 zip을 그대로 올립니다.</p>
-      <p class="method-cond">※ 테넌트에서 <b>사용자 지정 앱 업로드(사이드로드)</b>가 허용되어 있어야 합니다.</p>
-    </div>
-    <div class="method">
-      <div class="method-head"><span class="method-no">2</span> 조직 전체에 배포 — Teams 관리 센터</div>
-      <p><a href="https://admin.teams.microsoft.com" target="_blank" rel="noopener">admin.teams.microsoft.com</a> → <b>Teams 앱</b> → <b>앱 관리</b> → <b>새 앱 업로드</b> → zip 업로드 → 해당 앱을 <b>앱 설정 정책</b>에 추가해 사용자/그룹에게 배포합니다.</p>
-      <p class="method-cond">M365 Copilot에서도 같은 앱이 에이전트로 노출됩니다.</p>
-    </div>
+
+    <figure class="fig">
+      <div class="fig-title"><span class="fig-num">1</span>에이전트 추가 진입 — Microsoft 365 관리 센터</div>
+      <a href="img/import-mac-1.png" target="_blank" rel="noopener"><img loading="lazy" src="img/import-mac-1.png" alt="MAC 에이전트 추가 진입"></a>
+    </figure>
+    <div class="note"><a href="https://admin.microsoft.com" target="_blank" rel="noopener">Microsoft 365 관리 센터</a>에서 ① <b>에이전트</b> → ② <b>모든 에이전트</b>(레지스트리)로 이동한 뒤 ③ <b>에이전트 추가</b>를 선택합니다. 이 작업에는 <b>AI 관리자</b> 역할이 필요합니다.</div>
+
+    <figure class="fig">
+      <div class="fig-title"><span class="fig-num">2</span>매니페스트(.zip) 업로드 — 게시할 에이전트 업로드</div>
+      <a href="img/import-mac-2.png" target="_blank" rel="noopener"><img loading="lazy" src="img/import-mac-2.png" alt="MAC 매니페스트 zip 업로드"></a>
+    </figure>
+    <div class="note">① <b>파일 선택</b>으로 위에서 내려받은 <code>Agent365-Guide-Demo.zip</code>(매니페스트 패키지)을 업로드하고 유효성 검사를 통과시킵니다. 파일 선택 이후에는 <a class="xref" data-target="ch1">1. 에이전트 승인 및 전사 배포</a> 절차와 <b>동일하게</b> 대상 지정·권한 검토·게시를 진행하면 전사에 배포됩니다.</div>
 
     <div class="pagenav"><span class="pn-empty"></span><a class="nxt" href="#ch0" data-go="ch0"><span class="lbl">다음 →</span><br>0. 에이전트 생성</a></div>
   </section>"""
