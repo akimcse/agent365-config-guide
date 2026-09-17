@@ -27,6 +27,8 @@ CH = [
       lead="Defender AI 보안과 Power Platform 위협 탐지를 연결해, Copilot Studio 에이전트의 도구 호출·프롬프트를 실시간으로 검사하고 차단하는 단계입니다. 커넥터 설정 → 인증용 앱 생성 → 환경 연결 → 보호 정책 순으로 진행합니다."),
  dict(id="ch7", num="7", orig="7", name="에이전트 트래픽 모니터링", intro=81, range=(82,86),
       lead="Global Secure Access for Agents(preview)를 환경 단위로 켜고, Entra의 Gen AI 인사이트 로그에서 에이전트가 주고받은 실제 트래픽(요청·응답)을 조회하는 단계입니다."),
+ dict(id="ch8", num="8", orig="8", name="에이전트 실행 텔레메트리", intro=None, range=None, custom=True,
+      lead="Defender·Entra의 보안·트래픽 이벤트와 별개로, <b>에이전트 내부 실행</b>(노드 실행·도구 호출 인자/결과·LLM span)을 <b>Application Insights</b>로 수집하는 관측(observability) 단계입니다. Power Platform 관리 센터의 환경 단위 데이터 내보내기로 Copilot Studio 텔레메트리를 App Insights에 연결하고, Foundry 기반 에이전트는 Tracing으로 연결합니다."),
 ]
 
 DESC = {
@@ -275,6 +277,109 @@ def ch5_custom_html():
     return "".join(f"<th>{x}</th>" for x in []), ths, "".join(trs), "".join(steps)
 
 
+# ===== Chapter 8 (실행 텔레메트리 / App Insights) 커스텀 =====
+CH8_TABLE = [
+    ["#", "항목", "설정 위치", "확인 포인트", ""],
+    ["0", "역할/권한 준비", "Power Platform 관리 센터 + Azure 구독",
+     "Power Platform 관리자 + 대상 환경의 시스템 관리자, Azure에서 App Insights 생성·연결 권한. 대상 환경은 Managed Environment여야 함", ""],
+    ["1", "PowerPlatform 설정", "PPAC > 관리 > 데이터 내보내기 > App Insights > 새 데이터 내보내기",
+     "Copilot Studio 텔레메트리를 대상 환경 → App Insights로 연결 (환경/App Insights 1:1)", "s81a"],
+    ["2", "App Insights에서 텔레메트리 조회", "Azure Portal > App Insights > 조사 > Agents / Logs (KQL)",
+     "모든 텔레메트리는 dependencies 테이블에 OpenTelemetry span으로 기록(InvokeAgent·ExecuteTool·OutputMessages), 데이터 도착 SLA 최대 24시간", "s82a"],
+]
+CH8_FIGS = [
+    ("s81a", "1-1", "PowerPlatform 설정 — 데이터 내보내기 진입", "img/ai-8-1.png",
+     "<code>Power Platform 관리 센터</code> 맨 좌측의 ① <b>관리</b> 탭에서 ② <b>데이터 내보내기</b>를 열고, ③ <b>App Insights</b> 탭에서 ④ <b>새 데이터 내보내기</b>를 시작합니다. 이 작업에는 <b>Power Platform 관리자</b>와 대상 환경의 <b>시스템 관리자</b> 권한이 필요하며, 대상 환경은 <b>Managed Environment</b>여야 합니다."),
+    ("s81b", "1-2", "PowerPlatform 설정 — 이름·데이터 종류 지정", "img/ai-8-2.png",
+     "① <b>내보내기 패키지 이름</b>을 지정하고, ② 내보낼 데이터 종류에서 <b>Copilot Studio(미리 보기)</b>를 선택합니다. 필요 시 Dataverse 진단·Power Automate 등 다른 종류도 함께 선택할 수 있습니다."),
+    ("s81c", "1-3", "PowerPlatform 설정 — 환경 선택 (Managed Environment)", "img/ai-8-3.png",
+     "텔레메트리를 수집할 <b>환경</b>을 선택합니다. 이 기능은 <b>관리형 환경(Managed Environment)</b>만 대상이 되며, 이 실습에서는 데모 에이전트가 있는 <code>Agent-Demo</code> 환경을 선택했습니다."),
+    ("s81d", "1-4", "PowerPlatform 설정 — App Insights 인스턴스 생성 (Azure 포털)", "img/ai-8-4.png",
+     "연결할 Application Insights 인스턴스가 없으면 마법사의 <b>“Azure 포털로 이동합니다”</b> 링크에서 인스턴스를 새로 만듭니다. 대상 <b>구독·리소스 그룹·이름·리전</b>을 지정하고 생성합니다(이 실습에서는 <code>rg-agent-sec</code>에 <code>agent365-appinsights</code>를 생성). ① 배포 완료를 확인하고 ② 리소스로 이동할 수 있습니다.<br><br><span class=\"hl-note\">참고: 이미 인스턴스가 있으면 이 단계는 건너뛰고 바로 다음 단계에서 선택하면 됩니다. 새로 만든 인스턴스는 PPAC 목록에 반영되기까지 수 분의 전파 지연이 있을 수 있습니다.</span>"),
+    ("s81e", "1-5", "PowerPlatform 설정 — App Insights 연결 (구독·리소스 그룹·인스턴스)", "img/ai-8-5.png",
+     "① <b>구독</b>, ② <b>리소스 그룹</b>, ③ <b>Application Insights 인스턴스</b>를 차례로 선택해 연결 대상을 지정합니다. App Insights 인스턴스는 환경/테넌트당 <b>1:1</b>로 연결하는 것을 권장합니다(여러 환경을 하나에 섞으면 기본 리포트가 깨질 수 있음)."),
+    ("s81g", "1-6", "PowerPlatform 설정 — 검토 및 생성", "img/ai-8-6.png",
+     "① 패키지 이름·환경·데이터 종류·<b>연결 세부 정보</b>(구독·리소스 그룹·인스턴스)를 검토하고 ② <b>만들기</b>로 데이터 내보내기를 생성합니다."),
+    ("s81h", "1-7", "PowerPlatform 설정 — 연결 완료", "img/ai-8-7.png",
+     "① <b>“Application Insights에 대한 데이터 내보내기가 설정되었습니다”</b> 안내가 표시되고, ② 목록에 생성된 내보내기(이름·환경·데이터 선택·App Insights·<b>상태=연결됨</b>)가 나타납니다.<br><br><span class=\"hl-note\">참고: 설정 후 실제 데이터가 App Insights에 도착하기까지 <b>최대 24시간(SLA)</b>이 걸릴 수 있습니다.</span>"),
+    ("callout", '<h2 class="ov-h" style="margin-top:40px;">2단계 — 에이전트 텔레메트리 조회</h2>'),
+    ("s82a", "2-1", "에이전트 텔레메트리 조회 — App Insights 에이전트 세부 정보(Agents)", "img/ai-8-agents.png",
+     "생성한 Application Insights 리소스(<code>agent365-appinsights</code>)를 열고 ① 좌측 <b>조사(Investigate)</b> 섹션을 펼쳐 ② <b>Agents (Preview)</b> 페이지로 이동합니다. 이 <b>AI 에이전트 모니터링</b> 화면은 기본 리포트로 <b>에이전트 사용량·도구 호출(tool calls)·토큰 사용(token usage)·지연(latency)·오류</b> 인사이트를 보여줍니다.<br><br><span class=\"hl-note\">참고: 이 <b>Agents(에이전트 세부 정보) 페이지</b>는 기존 <b>Copilot Studio 대시보드(미리 보기) 워크북(2026-01-31 제거 예정)</b>을 대체하는 <b>권장 화면</b>입니다. 화면은 데이터 내보내기를 방금 설정한 직후라 아직 활동이 없어 “AI 에이전트 모니터링 시작” 안내가 표시되며, 텔레메트리는 데이터 내보내기 설정 후 <b>최대 24시간(SLA)</b> 내에 도착합니다.</span>"),
+    ("callout",
+     "<figure class=\"fig\">"
+     "<div class=\"fig-title\"><span class=\"fig-num\" style=\"background:var(--surface-2);color:var(--text-soft);\">참고</span>App Insights에서 확인 가능한 텔레메트리 — 무엇이 span으로 남는가</div>"
+     "<div class=\"ref-card\">"
+     "<p style=\"margin:0 0 12px;font-size:14px;\">1단계 내보내기를 켜면, 에이전트가 실행될 때마다 그 과정이 <b>자동으로</b> Application Insights의 <code>dependencies</code> 테이블에 쌓입니다(따로 켤 설정은 없습니다). 기록 단위는 <b>span</b>이며, 사용자가 한 번 말하고 에이전트가 답하는 <b>한 턴(turn)</b>이 다음 3개 span으로 남습니다 — <code>InvokeAgent</code>(사용자 입력을 받은 시작점) → <code>ExecuteTool</code>(도구·커넥터 호출) → <code>OutputMessages</code>(에이전트 응답).</p>"
+     "<div class=\"tw tw-fields\"><table><thead><tr>"
+     "<th>이벤트 (span)</th><th>무엇을 기록</th><th>주요 <code>gen_ai.*</code> 속성 (customDimensions)</th></tr></thead><tbody>"
+     "<tr><td><code>InvokeAgent</code><br>(턴 루트)</td><td>에이전트 턴 시작 · 사용자 입력</td>"
+     "<td><code>gen_ai.input.messages</code> (사용자 프롬프트)</td></tr>"
+     "<tr><td><code>ExecuteTool</code></td><td>도구·커넥터 호출</td>"
+     "<td><code>gen_ai.tool.name</code> · <code>gen_ai.tool.type</code> · <b>입력</b> <code>gen_ai.tool.call.arguments</code> · <b>출력</b> <code>gen_ai.tool.call.result</code></td></tr>"
+     "<tr><td><code>OutputMessages</code></td><td>에이전트 응답</td>"
+     "<td><code>gen_ai.output.messages</code> (에이전트 답변)</td></tr>"
+     "<tr><td>모든 span 공통</td><td>트레이스·대화 상관관계</td>"
+     "<td><code>gen_ai.agent.name</code> · <code>gen_ai.conversation.id</code> · <code>gen_ai.request.model</code> · <code>operation_Id</code>(턴) · <code>operation_ParentId</code>(중첩)</td></tr>"
+     "</tbody></table></div>"
+     "<div class=\"ref-links\"><b>필드 레퍼런스:</b> "
+     "<a class='xref-ext' href='https://learn.microsoft.com/ko-kr/microsoft-copilot-studio/advanced-environment-level-agent-telemetry' target='_blank' rel='noopener'>환경 단위 텔레메트리 — dependencies span·gen_ai 필드(공식 문서)</a> · "
+     "<a class='xref-ext' href='https://learn.microsoft.com/ko-kr/azure/azure-monitor/reference/tables/dependencies' target='_blank' rel='noopener'>dependencies 테이블 스키마</a> · "
+     "<a class='xref-ext' href='https://learn.microsoft.com/en-us/power-platform/admin/set-up-export-application-insights' target='_blank' rel='noopener'>환경 단위 App Insights 내보내기 설정</a></div>"
+     "</div></figure>"),
+    ("s82b", "2-2", "에이전트 텔레메트리 조회 — App Insights Logs (KQL)", "",
+     "Agents 뷰 외에 직접 KQL로 조회하려면 <code>Application Insights &gt; 모니터링 &gt; 로그</code>에서 <b>KQL 모드</b>로 쿼리를 실행합니다. 환경 단위 내보내기 텔레메트리는 모두 <code>dependencies</code> 테이블에 <code>gen_ai.*</code> 속성을 가진 span으로 저장되므로, 아래 예시는 공식 문서 기준 <code>dependencies</code> 쿼리입니다. (현재는 데이터 수집 전이라 스크린샷은 데이터 도착 후 추가 예정)"),
+    ("callout",
+     "<div class=\"code\"><div class=\"code-head\"><span>KQL — span 종류별 개수(데이터 도착 확인)</span><button class=\"copy-btn\" type=\"button\">복사</button></div><pre><code>dependencies\n| where timestamp &gt; ago(24h)\n| where type == \"GenAI\"\n| summarize count() by name\n| order by count_ desc   // InvokeAgent · ExecuteTool · OutputMessages</code></pre></div>"
+     "<div class=\"code\"><div class=\"code-head\"><span>KQL — 도구 호출 입력·출력 조회 (ExecuteTool)</span><button class=\"copy-btn\" type=\"button\">복사</button></div><pre><code>dependencies\n| where timestamp &gt; ago(24h)\n| where name == \"ExecuteTool\"\n| project timestamp,\n          ToolName  = tostring(customDimensions[\"gen_ai.tool.name\"]),\n          ToolType  = tostring(customDimensions[\"gen_ai.tool.type\"]),\n          Arguments = tostring(customDimensions[\"gen_ai.tool.call.arguments\"]),\n          Result    = tostring(customDimensions[\"gen_ai.tool.call.result\"]),\n          Conversation = tostring(customDimensions[\"gen_ai.conversation.id\"]),\n          resultCode, duration\n| order by timestamp desc</code></pre></div>"
+     "<div class=\"code\"><div class=\"code-head\"><span>KQL — 도구별 호출량·지연·성공률</span><button class=\"copy-btn\" type=\"button\">복사</button></div><pre><code>dependencies\n| where timestamp &gt; ago(24h)\n| where name == \"ExecuteTool\"\n| extend ToolName = tostring(customDimensions[\"gen_ai.tool.name\"])\n| summarize calls = count(),\n            avgDurationMs = avg(duration),\n            successRate = 100.0 * countif(success == true) / count()\n          by ToolName\n| order by calls desc</code></pre></div>"
+     "<div class=\"code\"><div class=\"code-head\"><span>KQL — 특정 대화의 전체 트레이스(턴 재구성)</span><button class=\"copy-btn\" type=\"button\">복사</button></div><pre><code>// 대화 ID는 테스트 중 /debug conversationid 로 확인\nlet Convo = \"&lt;conversation id&gt;\";\ndependencies\n| where tostring(customDimensions[\"gen_ai.conversation.id\"]) == Convo\n| order by operation_Id asc, iff(name == \"InvokeAgent\", 0, 1) asc, timestamp asc\n| project timestamp, name, operation_Id, operation_ParentId,\n          duration, resultCode, customDimensions</code></pre></div>"),
+    ("callout", '<h2 class="ov-h" style="margin-top:40px;">부록 — Foundry 기반 에이전트 Tracing</h2>'),
+    ("callout",
+     "<div class=\"scope-box\" id=\"s81f\"><p>이 장은 <b>Copilot Studio 에이전트</b>의 텔레메트리를 다룹니다. 반면 <b>Azure AI Foundry</b>로 만든 에이전트는 PPAC 데이터 내보내기가 아니라 <b>Foundry 포털의 Tracing</b>에서 Application Insights 리소스를 연결해 관측합니다(<b>OpenTelemetry → Azure Application Insights</b>).</p>"
+     "<a class='cta-link' href='https://learn.microsoft.com/ko-kr/azure/foundry/observability/how-to/trace-agent-setup?tabs=python' target='_blank' rel='noopener'>Foundry 에이전트 추적 설정(공식 문서) →</a></div>"),
+]
+
+def custom_section_html(table, steps_html):
+    ths = "".join(f"<th>{esc(x)}</th>" for x in table[0][:-1])
+    trs = []
+    for r in table[1:]:
+        cells, tgt = r[:-1], r[-1]
+        tds = "".join("<td>" + esc(x).replace("\n", "<br>") + "</td>" for x in cells)
+        if tgt:
+            trs.append(f'<tr class="jump" data-target="{tgt}" tabindex="0">{tds}</tr>')
+        else:
+            trs.append(f"<tr>{tds}</tr>")
+    return ths, "".join(trs)
+
+
+def render_figs(figs):
+    steps = []
+    for item in figs:
+        # callout item: ("callout", html)
+        if item[0] == "callout":
+            steps.append(item[1])
+            continue
+        fid, label, title, img, note = item
+        if not img:
+            imgs_html = '<div class="ph">스크린샷 준비 중 — 캡처 후 추가 예정</div>'
+        else:
+            imgs_list = img if isinstance(img, (list, tuple)) else [img]
+            imgs_html = "".join(
+                f'<a href="{p}" target="_blank" rel="noopener"><img loading="lazy" src="{p}" alt="{esc(title)}"></a>'
+                for p in imgs_list)
+        if label == "예시":
+            numspan = '<span class="fig-num" style="background:var(--surface-2);color:var(--text-soft);">예시</span>'
+        else:
+            numspan = f'<span class="fig-num">{label}</span>'
+        steps.append(f"""
+      <figure class="fig" id="{fid}">
+        <div class="fig-title">{numspan}{esc(title)}</div>
+        {imgs_html}
+      </figure>
+      <div class="note">{note}</div>""")
+    return "".join(steps)
+
+
 def title_of(n):
     for sh in deck[n-1]["shapes"]:
         if sh["kind"] == "text" and sh["name"] in ("제목 1",) or (sh["kind"]=="text" and "title" in sh["name"].lower()):
@@ -303,6 +408,23 @@ def anchor_for(c, firstcol):
     return None
 
 for c in CH:
+    if c.get("custom") and c["id"] == "ch8":
+        ths, trs_html = custom_section_html(CH8_TABLE, "")
+        steps_html = render_figs(CH8_FIGS)
+        parts.append(f"""
+  <section id="{c['id']}" class="page">
+    <div class="hero">
+      <span class="tag">Chapter {c['num']} · Microsoft Agent 365</span>
+      <h1>{c['num']}. {esc(c['name'])}</h1>
+      <p>{c['lead']}</p>
+    </div>
+    <h2 class="ov-h">전체 순서 한눈에 보기</h2>
+    <div class="tw"><table><thead><tr>{ths}</tr></thead><tbody>{trs_html}</tbody></table></div>
+    <h2 class="ov-h">단계별 상세</h2>
+    {steps_html}
+    <div class="pagenav">__PN{c['num']}__</div>
+  </section>""")
+        continue
     if c.get("custom") and c["id"] == "ch5":
         _, ths, trs_html, steps_html = ch5_custom_html()
         parts.append(f"""
@@ -473,6 +595,12 @@ h2.ov-h::before{content:"";position:absolute;left:0;top:2px;bottom:10px;width:5p
 .rec{font-size:11px;font-weight:700;color:#fff;background:var(--low,#3a7d34);border-radius:999px;padding:2px 9px;margin-left:2px;}
 table{width:100%;border-collapse:collapse;margin:6px 0 8px;font-size:14px;background:var(--surface);border-radius:10px;overflow:hidden;box-shadow:var(--shadow);}
 .tw{overflow-x:auto;}
+.ref-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 18px;box-shadow:var(--shadow);}
+.ref-card .tw-fields table{margin:0;box-shadow:none;}
+.ref-links{margin-top:12px;font-size:13px;color:var(--text-soft);line-height:1.8;}
+.tw-fields td:first-child,.tw-fields th:first-child{text-align:left;font-weight:600;width:auto;color:inherit;white-space:nowrap;}
+.tw-fields table{width:100%;border-collapse:collapse;font-size:13.5px;}
+.tw-fields code{white-space:nowrap;}
 th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top;}
 th{background:var(--surface-2);font-weight:600;font-size:13px;white-space:nowrap;}
 td:first-child,th:first-child{text-align:center;font-weight:700;width:42px;color:var(--accent);}
