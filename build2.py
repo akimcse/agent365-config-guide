@@ -174,20 +174,29 @@ EXTRA = {
       </figure>
       <div class="note">경고를 클릭한 뒤 <b>활동 세부 정보</b> 탭을 열면(위 화면), 해당 탐지의 원천 데이터를 필드 단위로 확인할 수 있습니다. 대표 필드는 다음과 같습니다.<br><br>• <b>에이전트 식별</b> — <code>AgentName</code>·<code>AgentID</code>·<code>PlatformAgentType</code>(예: AzureAIFoundry)·<code>AgentBlueprintID</code>·<code>ChannelName</code>(예: msteams:COPILOT): <b>어떤 에이전트가 어떤 플랫폼·채널에서</b> 동작했는지<br>• <b>세션·요청</b> — <code>ConversationId</code>·<code>RequestId</code>·<code>ResponseId</code>·<code>RequestMessages</code>: 실제 <b>요청/응답과 대화 맥락</b><br>• <b>도구 호출</b> — <code>ToolName</code>(예: mcp_WorkIQWord.GetDocumentContent)·<code>ToolType</code>·<code>ToolID</code>·<code>ToolOutput</code>: 에이전트가 호출한 <b>도구와 그 출력</b>(주입 콘텐츠 포함)<br>• <b>위협 분류</b> — <code>MitreAtlasTactics/Techniques</code>·<code>OWASPCategory</code>·<code>PotentialCauses</code>: <b>어떤 공격 기법·원인</b>으로 분류됐는지<br><br>즉 이 탭 하나에서 <b>어떤 에이전트가, 어떤 채널에서, 어떤 도구를 호출해, 어떤 위협으로 탐지됐는지</b>를 한 번에 파악할 수 있습니다. 우측 <b>세부 정보</b> 패널에서는 심각도·상태·경고 ID·범주 등 경고 메타데이터를 확인합니다.</div>
       <figure class="fig" id="s80-4">
-        <div class="fig-title"><span class="fig-num">6-3</span>런타임 탐지 시나리오 — AlertInfo (고급 헌팅)</div>
-        <a href="img/rt-alertinfo.png" target="_blank" rel="noopener"><img loading="lazy" src="img/rt-alertinfo.png" alt="고급 헌팅 AlertInfo"></a>
+        <div class="fig-title"><span class="fig-num">6-3</span>런타임 탐지 시나리오 — AgentsInfo 조인 (에이전트 컨텍스트 보강)</div>
+        <a href="img/rt-agentsinfo.png" target="_blank" rel="noopener"><img loading="lazy" src="img/rt-agentsinfo.png" alt="고급 헌팅 — AlertEvidence를 AgentsInfo와 EntraAgentID로 조인해 탐지에 에이전트 컨텍스트를 보강"></a>
       </figure>
-      <div class="note">고급 헌팅의 <code>AlertInfo</code> 테이블을 KQL로 조회해 AI 경고를 메타데이터 기준으로 필터링·집계합니다. 포털 경고 목록보다 유연하게 상관 분석·사용자 지정 탐지를 만들 수 있습니다.<br><br><b>주요 컬럼과 조회 가능 정보</b><br>• <code>Timestamp</code> — 경고 발생 시각(기간 필터·추이 분석)<br>• <code>Title</code> — 경고 제목(예: <i>AI agent abuse</i>, <i>A cross or external prompt Injection attack (XPIA)…</i>)<br>• <code>Severity</code> — 심각도(Informational·Low·Medium·High)<br>• <code>Category</code> — 공격 범주(예: InitialAccess·DefenseEvasion)<br>• <code>ServiceSource</code>·<code>DetectionSource</code> — 어떤 서비스·엔진이 탐지했는지(예: Microsoft Security for AI, Defender XDR)<br>• <code>AlertId</code> — 경고 고유 ID(<code>AlertEvidence</code>·<code>AlertInfo</code> 조인 키)<br>이를 통해 <b>어떤 유형의 AI 위협이, 언제, 어떤 심각도로, 어떤 엔진에 의해</b> 탐지됐는지를 집계·상관 분석할 수 있습니다.</div>
-      <div class="code"><div class="code-head"><span>KQL — 최근 30일 AI 관련 경고 조회</span><button class="copy-btn" type="button">복사</button></div><pre><code>AlertInfo
+      <div class="note">고급 헌팅에서 탐지 데이터에 <b>에이전트 인벤토리·구성 컨텍스트</b>를 붙이려면 <code>AgentsInfo</code> 테이블을 조인합니다. <code>AgentsInfo</code>는 <b>Microsoft Agent 365의 에이전트 목록·구성·소유자</b> 정보를 담는 테이블로, 에이전트별 <b>선언 도구·MCP 서버·권한·수명주기 상태</b>까지 조회할 수 있습니다. <span class="hl-note">참고: 이 테이블은 기존 <code>AIAgentsInfo</code>를 대체하며(<code>AIAgentsInfo</code>는 2026-07-01 폐기 예정), Agent 365 환경에서는 <code>AgentsInfo</code>를 사용합니다.</span><br><br><b>왜 AlertInfo가 아니라 AgentsInfo인가</b><br>고급 헌팅의 <code>AlertInfo</code>는 <b>6-1·6-2에서 이미 본 포털 경고와 동일한 경고 메타데이터</b>(제목·심각도·범주)라 별도 조회 가치가 크지 않습니다. 반면 <code>AgentsInfo</code>는 <b>탐지 데이터에는 없는 에이전트 자체의 정체성·소유·구성</b>을 제공하므로, 경고를 이 테이블과 조인하면 <b>“어떤 에이전트가·누구 소유이고·무슨 도구를 쓰며·현재 상태(Active/Blocked)가 무엇인지”</b>를 한 줄로 보강할 수 있습니다.<br><br><b>조인 키 — <code>EntraAgentID</code></b><br>탐지 증거 테이블 <code>AlertEvidence</code>에서 <code>EntityType == "AIAgent"</code> 행의 <code>AdditionalFields.AgentId</code>(Entra 에이전트 ID)를 꺼내, <code>AgentsInfo.EntraAgentID</code>와 조인합니다.<br>• <code>Name</code> — 에이전트 표시 이름 &nbsp;• <code>Owners</code> — 소유자(Entra 개체 ID) &nbsp;• <code>LifecycleStatus</code> — 운영 상태(<code>Active</code>·<code>Blocked</code>·<code>Uninstalled</code>·<code>Deleted</code>)<br>• <code>DeclaredTools</code>·<code>McpServers</code> — 선언된 도구·연결된 MCP 서버 &nbsp;• <code>Permissions</code>·<code>PublishedStatus</code> — 요청·부여 권한과 게시 상태<br>위 화면은 <b>XPIA(간접 프롬프트 인젝션) 경고</b>를 <code>EntraAgentID</code>로 조인해, 탐지된 에이전트(<code>foundry-ops</code>)의 <b>소유자·상태(Active)·도구(web_search)</b>를 함께 확인한 결과입니다.</div>
+      <div class="code"><div class="code-head"><span>KQL — 탐지(경고)에 에이전트 컨텍스트 보강 (EntraAgentID 조인)</span><button class="copy-btn" type="button">복사</button></div><pre><code>AlertEvidence
 | where Timestamp &gt; ago(30d)
-| where Title has_any ("agent","prompt","injection","AI")
-| project Timestamp, Title, Severity, Category, ServiceSource, DetectionSource, AlertId
-| order by Timestamp desc</code></pre></div>
-      <div class="code"><div class="code-head"><span>KQL — 경고 유형·심각도별 집계</span><button class="copy-btn" type="button">복사</button></div><pre><code>AlertInfo
-| where Timestamp &gt; ago(30d)
-| where Title has_any ("agent","prompt","injection","AI")
-| summarize Count = count() by Title, Severity, Category
-| order by Count desc</code></pre></div>
+| where ServiceSource == "Security for AI"
+| where EntityType == "AIAgent"
+| extend EntraAgentID = tostring(todynamic(AdditionalFields).AgentId)
+| join kind=inner (AlertInfo | project AlertId, Title, Severity) on AlertId
+| join kind=inner (
+    AgentsInfo
+    | summarize arg_max(Timestamp, *) by AgentId
+    | mv-apply t = DeclaredTools on (summarize Tools = make_set(t.type))
+    | project EntraAgentID, AgentName = Name, Owners, LifecycleStatus, Tools
+  ) on EntraAgentID
+| project AgentName, Owners, LifecycleStatus, Tools, Detection = Title, Severity, EntraAgentID
+| order by AgentName asc</code></pre></div>
+      <div class="code"><div class="code-head"><span>KQL — 에이전트 인벤토리·구성 단독 조회 (소유자·도구·MCP·상태)</span><button class="copy-btn" type="button">복사</button></div><pre><code>AgentsInfo
+| summarize arg_max(Timestamp, *) by AgentId
+| project Name, Platform, EntraAgentID, LifecycleStatus, PublishedStatus,
+          Owners, DeclaredTools, McpServers, Permissions
+| order by Name asc</code></pre></div>
       <figure class="fig" id="s80-5">
         <div class="fig-title"><span class="fig-num">6-4</span>런타임 탐지 시나리오 — CloudAppEvents (고급 헌팅)</div>
         <a href="img/rt-cloudapp.png" target="_blank" rel="noopener"><img loading="lazy" src="img/rt-cloudapp.png" alt="고급 헌팅 CloudAppEvents"></a>
@@ -215,7 +224,7 @@ EXTRA = {
 # 챕터 intro 표에 덱 외 추가 행(항목, 설정 위치, 확인 포인트)과 점프 대상
 EXTRA_ROWS = {
     "ch7": [
-        (["6", "런타임 탐지 시나리오", "Defender > 사건 & 경고 / 고급 헌팅(AlertInfo·CloudAppEvents)",
+        (["6", "런타임 탐지 시나리오", "Defender > 사건 & 경고 / 고급 헌팅(AgentsInfo·CloudAppEvents)",
           "실제 에이전트 실행에서 발생한 위험 신호를 준실시간 탐지·조사"], "s80-2"),
     ],
 }
