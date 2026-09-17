@@ -12,31 +12,37 @@ def table_of(slide_no):
 
 CH = [
  dict(id="ch0", num="0", orig="0", name="에이전트 생성", intro=3, range=(4,17),
-      lead="Copilot Studio(New experience)에서 실습용 에이전트를 만들고, 지침·지식·도구를 구성한 뒤 Teams / Microsoft 365 Copilot 채널로 게시하고 관리자 승인까지 제출하는 단계입니다. 이후 1~7장의 모든 관리·보안 시나리오는 여기서 만든 에이전트를 대상으로 진행합니다."),
+      lead="Copilot Studio(New experience)에서 실습용 에이전트를 만들고, 지침·지식·도구를 구성한 뒤 Teams / Microsoft 365 Copilot 채널로 게시하고 관리자 승인까지 제출하는 단계입니다. 이후 1~8장의 모든 관리·보안 시나리오는 여기서 만든 에이전트를 대상으로 진행합니다."),
  dict(id="ch1", num="1", orig="1", name="에이전트 승인 및 전사 배포", intro=18, range=(19,25),
       lead="제작자가 제출한 에이전트를 AI 관리자가 검토·승인하고, 조직 카탈로그(Microsoft Store)에 게시해 전사에 배포하는 단계입니다. 승인 심사에서는 제작자·업무 목적·지식·도구·요청 권한을 함께 확인합니다."),
  dict(id="ch2", num="2", orig="2", name="에이전트 인벤토리 확인", intro=26, range=(27,30),
       lead="테넌트에 존재하는 에이전트를 레지스트리에서 조회하고, 각 에이전트의 소유자·지식·도구·권한·채널 구성과 실제 사용량을 확인하는 단계입니다. 등록되어 있다는 것과 실제로 쓰이고 있다는 것은 다르므로 두 가지를 분리해서 봅니다."),
  dict(id="ch3", num="3", orig="3", name="에이전트 차단", intro=31, range=(32,37),
       lead="문제가 있는 에이전트를 즉시 사용 불가 상태로 만들고, 사용자 화면에서 실제로 차단됐는지 확인한 뒤 복구하는 단계입니다. 차단은 삭제나 Agent ID 인증 중지와는 구분되는 조치입니다."),
- dict(id="ch4", num="4", orig="5", name="에이전트 리스크 탐지", intro=48, range=(49,64),
-      lead="Purview 내부 위험 관리(IRM)에서 에이전트 정책을 만들어 위험 신호를 수집하고, 에이전트 경고를 확인하는 단계입니다. 감사 로그 수집이 켜져 있어야 지표·경고가 생성됩니다."),
- dict(id="ch5", num="5", orig="4", name="에이전트에 대한 조건부 접근제어", intro=38, range=(39,47), custom=True,
+ dict(id="ch4", num="4", orig="4", name="에이전트에 대한 기본 접근제어", intro=38, range=(39,47), custom=True,
       lead="사용자가 <b>사외(신뢰할 수 없는 네트워크)</b>에서 <b>Copilot Studio 에이전트</b>를 사용하지 못하도록 Entra 조건부 액세스 정책을 만들고, 실제 차단과 로그인 로그의 평가 결과를 확인하는 단계입니다. 접근 제어 대상이 클라우드 리소스가 아니라 에이전트 자체가 됩니다."),
- dict(id="ch6", num="6", orig="6", name="에이전트 런타임 보호", intro=65, range=(66,80),
+ dict(id="ch5", num="5", orig="5", name="에이전트 리스크 탐지", intro=48, range=(49,64),
+      lead="Purview 내부 위험 관리(IRM)에서 에이전트 정책을 만들어 위험 신호를 수집하고, 에이전트 경고를 확인하는 단계입니다. 감사 로그 수집이 켜져 있어야 지표·경고가 생성됩니다."),
+ dict(id="ch6", num="6", orig="4", name="에이전트 리스크 기반 접근제어", intro=38, range=(39,47),
+      lead="에이전트가 접근하는 클라우드 앱·커넥터 리소스를 대상으로 조건부 액세스 정책을 적용하고, 위치·네트워크 등 리스크 신호에 따라 허용/차단을 제어한 뒤 로그인 로그로 평가 결과를 검증하는 단계입니다. 앞의 기본 접근제어가 에이전트 자체를 대상으로 했다면, 여기서는 에이전트가 호출하는 리소스(클라우드 앱)를 대상으로 접근을 통제합니다."),
+ dict(id="ch7", num="7", orig="6", name="에이전트 런타임 보호", intro=65, range=(66,80),
       lead="Defender AI 보안과 Power Platform 위협 탐지를 연결해, Copilot Studio 에이전트의 도구 호출·프롬프트를 실시간으로 검사하고 차단하는 단계입니다. 커넥터 설정 → 인증용 앱 생성 → 환경 연결 → 보호 정책 순으로 진행합니다."),
- dict(id="ch7", num="7", orig="7", name="에이전트 트래픽 모니터링", intro=81, range=(82,86),
+ dict(id="ch8", num="8", orig="7", name="에이전트 트래픽 모니터링", intro=81, range=(82,86),
       lead="Global Secure Access for Agents(preview)를 환경 단위로 켜고, Entra의 Gen AI 인사이트 로그에서 에이전트가 주고받은 실제 트래픽(요청·응답)을 조회하는 단계입니다."),
- dict(id="ch8", num="8", orig="8", name="에이전트 실행 텔레메트리", intro=None, range=None, custom=True,
+ dict(id="ch9", num="9", orig="8", name="에이전트 실행 텔레메트리", intro=None, range=None, custom=True, hidden=True,
       lead="Defender·Entra의 보안·트래픽 이벤트와 별개로, <b>에이전트 내부 실행</b>(노드 실행·도구 호출 인자/결과·LLM span)을 <b>Application Insights</b>로 수집하는 관측(observability) 단계입니다. Power Platform 관리 센터의 환경 단위 데이터 내보내기로 Copilot Studio 텔레메트리를 App Insights에 연결하고, Foundry 기반 에이전트는 Tracing으로 연결합니다."),
 ]
 
+# 보류(업데이트 대기) 챕터는 빌드에서 제외해 사이드바·본문·네비게이션에서 숨긴다.
+HIDDEN_IDS = {c["id"] for c in CH if c.get("hidden")}
+CH = [c for c in CH if not c.get("hidden")]
+
 DESC = {
- 4:"New Copilot Studio 우측 상단의 환경 선택기에서 실습에 사용할 Power Platform 환경을 먼저 고정합니다. <b>Power Platform 환경</b>은 앱·에이전트·데이터(Dataverse)를 담는 격리된 컨테이너로, 환경마다 접근 권한·보안·DLP 정책이 따로 적용됩니다. 여기서 선택한 환경이 6장(런타임 보호)·7장(트래픽 모니터링)의 <b>환경 단위 설정 대상</b>과 동일해야 하므로, 처음부터 실습 환경을 정해두는 것이 중요합니다. 해당 환경에 대한 제작자(Maker) 이상의 역할이 필요합니다.<br><br><b>⚠️ Notice —</b> 본 Agent 365 관련 데모는 기본 환경(Default Environment)에서도 따라 하실 수는 있으나, <b>실 운영 환경에서는 반드시 테스트를 위한 별도의 환경을 구성하시어 진행</b>하셔야 합니다. 환경 개념·생성 방법은 <a class='xref-ext' href='https://learn.microsoft.com/ko-kr/power-platform/admin/environments-overview' target='_blank' rel='noopener'>Power Platform 환경 개요(공식 문서)</a>를 참고하세요.",
+ 4:"New Copilot Studio 우측 상단의 환경 선택기에서 실습에 사용할 Power Platform 환경을 먼저 고정합니다. <b>Power Platform 환경</b>은 앱·에이전트·데이터(Dataverse)를 담는 격리된 컨테이너로, 환경마다 접근 권한·보안·DLP 정책이 따로 적용됩니다. 여기서 선택한 환경이 7장(런타임 보호)·8장(트래픽 모니터링)의 <b>환경 단위 설정 대상</b>과 동일해야 하므로, 처음부터 실습 환경을 정해두는 것이 중요합니다. 해당 환경에 대한 제작자(Maker) 이상의 역할이 필요합니다.<br><br><b>⚠️ Notice —</b> 본 Agent 365 관련 데모는 기본 환경(Default Environment)에서도 따라 하실 수는 있으나, <b>실 운영 환경에서는 반드시 테스트를 위한 별도의 환경을 구성하시어 진행</b>하셔야 합니다. 환경 개념·생성 방법은 <a class='xref-ext' href='https://learn.microsoft.com/ko-kr/power-platform/admin/environments-overview' target='_blank' rel='noopener'>Power Platform 환경 개요(공식 문서)</a>를 참고하세요.",
  5:"Agents 화면에서 <b>New agent</b>를 선택해 템플릿이 아닌 빈 에이전트로 시작합니다. 빈 에이전트로 시작해야 지침·지식·도구를 하나씩 통제하면서 붙일 수 있고, 이후 승인 심사에서 무엇이 왜 붙었는지 설명하기 쉽습니다. 이 가이드에서는 <code>Agent365-Guide-Demo</code>라는 이름을 사용합니다.",
  6:"① 에이전트 이름, ② 지침(Instructions), ③ 모델·행동 설정 순으로 입력합니다. New experience에서는 모델과 오케스트레이션 설정 위치가 기존 UI와 달라 <code>Settings &gt; AI &amp; behavior</code>에서 확인해야 하며, 기존의 '생성형 AI' 토글과는 구분됩니다. 지침은 1장의 관리자 승인 심사에서 <b>업무 목적을 판단하는 근거</b>가 되므로 구체적으로 작성합니다.",
  7:"<code>Build &gt; Add knowledge</code>에서 SharePoint·OneDrive·Dataverse 등 지식 원본을 연결합니다. 여기서 붙인 지식은 1장의 관리자 승인 화면과 2장의 인벤토리 <b>데이터 &amp; 도구</b> 탭에 그대로 노출되므로, 민감한 사이트를 연결할 때는 사전 검토가 필요합니다.",
- 8:"<code>Build &gt; Add tool &gt; Model Context Protocol (MCP)</code> 카탈로그에서 필요한 도구를 연결합니다. MCP 도구는 런타임에 실제로 호출되는 지점이므로, 4장(리스크 탐지)·6장(런타임 보호)·7장(트래픽 모니터링)에서 <b>탐지·보호·로깅의 실제 대상</b>이 됩니다.",
+ 8:"<code>Build &gt; Add tool &gt; Model Context Protocol (MCP)</code> 카탈로그에서 필요한 도구를 연결합니다. MCP 도구는 런타임에 실제로 호출되는 지점이므로, 5장(리스크 탐지)·7장(런타임 보호)·8장(트래픽 모니터링)에서 <b>탐지·보호·로깅의 실제 대상</b>이 됩니다.",
  9:"Preview(테스트) 패널에서 한국어 프롬프트로 실행해 지식 인용과 도구 호출이 정상인지 확인합니다. 단, 테스트 패널에서 발생한 활동은 2장에서 보는 <b>활성 사용자·세션 통계에는 집계되지 않습니다</b>. 실제 사용량 확인은 게시된 채널에서 실행한 결과로 판단해야 합니다.",
  10:"구성이 끝나면 게시 다이얼로그에서 채널 추가를 시작합니다. 게시는 '에이전트를 저장하는 것'이 아니라 <b>사용자에게 노출될 경로를 여는 것</b>이라는 점을 구분합니다.",
  11:"채널 선택기에서 <b>Teams 및 Microsoft 365 Copilot</b>을 선택합니다. 이 채널이 연결되어 있어야 이후 1장의 조직 카탈로그 배포, 3장의 차단 결과를 사용자 화면에서 확인할 수 있습니다.",
@@ -56,7 +62,7 @@ DESC = {
  25:"관리자 처리가 완료된 상태입니다. 배포 직후에는 Teams / Microsoft 365 Copilot 사용자 화면에 반영되기까지 시간이 걸릴 수 있으므로, 사용자 실행 확인은 잠시 후 다시 시도합니다.",
 
  27:"① <code>에이전트 &gt; 모든 에이전트 &gt; 레지스트리</code>로 이동해 ② <b>Platform = Copilot Studio</b>로 필터링합니다. 레지스트리는 테넌트에 등록된 에이전트의 단일 목록이며, <b>등록되어 있다는 사실이 실제로 사용 중이라는 뜻은 아닙니다</b>.",
- 28:"에이전트 상세의 <b>세부 정보</b>에서 소유자, 게시 채널, 상태, 그리고 해당 에이전트의 <b>Entra Agent ID</b>를 확인합니다. 이 Agent ID는 5장에서 조건부 액세스 대상으로 지정하고 로그인 로그와 대조할 때 사용하는 핵심 식별자입니다. 지식·도구(Data &amp; tools) 구성은 여기서 조회만 하고, 변경은 Copilot Studio에서 수행합니다.",
+ 28:"에이전트 상세의 <b>세부 정보</b>에서 소유자, 게시 채널, 상태, 그리고 해당 에이전트의 <b>Entra Agent ID</b>를 확인합니다. 이 Agent ID는 4장에서 조건부 액세스 대상으로 지정하고 로그인 로그와 대조할 때 사용하는 핵심 식별자입니다. 지식·도구(Data &amp; tools) 구성은 여기서 조회만 하고, 변경은 Copilot Studio에서 수행합니다.",
  29:"① 조회 기간을 지정하고 ② 활성 사용자·세션 지표를 확인합니다. 관리 센터의 활성 지표는 <b>게시된 채널에서 발생한 실사용</b>을 기준으로 집계됩니다.",
  30:"Copilot Studio의 <b>모니터</b>에서 세션·사용자 추이를 확인합니다. ① 조회 기간, ② 활성 사용자 보기를 확인하되 <b>기본 시간대가 UTC</b>인 점과 <b>테스트 패널 활동이 제외</b>되는 점을 감안해 해석합니다.",
 
@@ -208,7 +214,7 @@ EXTRA = {
 
 # 챕터 intro 표에 덱 외 추가 행(항목, 설정 위치, 확인 포인트)과 점프 대상
 EXTRA_ROWS = {
-    "ch6": [
+    "ch7": [
         (["6", "런타임 탐지 시나리오", "Defender > 사건 & 경고 / 고급 헌팅(AlertInfo·CloudAppEvents)",
           "실제 에이전트 실행에서 발생한 위험 신호를 준실시간 탐지·조사"], "s80-2"),
     ],
@@ -241,8 +247,8 @@ CH5_FIGS = [
      "정책 요약을 확인하고 ① <b>정책 사용</b>을 지정한 뒤 ② <b>만들기</b>로 생성합니다. 운영 반영 전 영향도를 먼저 보려면 <b>보고 전용(Report-only)</b>으로 만들어 로그로만 평가하고, <b>실제로 차단하려면 '설정(On)'으로 전환</b>합니다.<br><br><b>주의 —</b> <b>모든 사용자</b> + <b>차단</b> 조합은 광범위 영향을 줄 수 있으므로, 운영에서는 반드시 소규모 그룹으로 먼저 검증한 뒤 확대합니다."),
     ("sca7", "2-1", "실제 차단 확인 — 사외에서 에이전트 실행 차단", "img/ca-5-7.png",
      "정책을 <b>On</b>으로 둔 상태에서 <b>Teams / M365 Copilot</b>로 대상 Copilot Studio 에이전트를 <b>사외(비신뢰 네트워크)에서 실행</b>하면, 에이전트가 도구 호출을 위해 토큰을 요청하는 시점에 조건부 액세스가 이를 거부해 <b>실제로 차단</b>됩니다. 화면과 같이 <code>오류 코드: IntegratedAuthConditionalAccessBlocked</code> 메시지가 표시되며, 이는 <b>통합 인증이 조건부 액세스 정책에 의해 차단</b>됐음을 명시적으로 나타냅니다.<br><br><span class='hl-note'>참고: 조건부 액세스는 <b>새 토큰 요청 시</b> 평가되므로, 정책을 켠 직후 이미 로그인된 세션에서는 토큰 캐시로 인해 즉시 차단되지 않을 수 있습니다. 토큰이 갱신되거나 새 세션·새 도구 연결로 접근할 때 차단이 적용됩니다.</span>"),
-    ("sca8", "2-2", "정책 평가 확인 — 로그인 로그(조건부 액세스 결과)", "",
-     "<code>Entra &gt; 모니터링 및 상태 &gt; 로그인 로그</code>에서 <b>사용자 로그인(비대화형)</b> 탭을 열고, <b>조건부 액세스</b> 열(및 로그인 상세의 조건부 액세스 탭)에서 이 정책의 평가 결과를 확인합니다. 사외에서 대상 에이전트 리소스에 접근한 로그인은 이 정책에 의해 <b>실패(차단)</b>로 기록됩니다.<br><br>2-1의 차단(<code>IntegratedAuthConditionalAccessBlocked</code>)은 에이전트가 <b>사용자를 대신해(통합 인증/OBO)</b> 커넥터 토큰을 요청하다 막힌 것이라 <b>비대화형 로그인</b> 계열로 집계됩니다. <span class='hl-note'>참고: 비대화형 로그인 로그는 수집·반영까지 다소 지연될 수 있어, 차단 직후에는 로그가 보이지 않을 수 있습니다. 아래 화면은 로그 수집 후 추가할 예정입니다.</span>"),
+    ("sca8", "2-2", "정책 평가 확인 — 로그인 로그(조건부 액세스 결과)", "img/ca-5-8.png",
+     "<code>Entra &gt; 모니터링 및 상태 &gt; 로그인 로그</code>에서 <b>사용자 로그인(비대화형)</b> 탭을 열고, <b>조건부 액세스</b> 열(및 로그인 상세의 조건부 액세스 탭)에서 이 정책의 평가 결과를 확인합니다. 사외에서 대상 에이전트 리소스에 접근한 로그인은 이 정책에 의해 <b>실패(차단)</b>로 기록됩니다.<br><br><span class='hl-note'>참고: 비대화형 로그인 로그는 수집·반영까지 다소 지연될 수 있어, 차단 직후에는 로그가 보이지 않을 수 있습니다.</span>"),
 ]
 
 def ch5_custom_html():
@@ -408,7 +414,7 @@ def anchor_for(c, firstcol):
     return None
 
 for c in CH:
-    if c.get("custom") and c["id"] == "ch8":
+    if c.get("custom") and c["id"] == "ch9":
         ths, trs_html = custom_section_html(CH8_TABLE, "")
         steps_html = render_figs(CH8_FIGS)
         parts.append(f"""
@@ -425,7 +431,7 @@ for c in CH:
     <div class="pagenav">__PN{c['num']}__</div>
   </section>""")
         continue
-    if c.get("custom") and c["id"] == "ch5":
+    if c.get("custom") and c["id"] == "ch4":
         _, ths, trs_html, steps_html = ch5_custom_html()
         parts.append(f"""
   <section id="{c['id']}" class="page">
@@ -661,7 +667,7 @@ HTML = """<!DOCTYPE html>
 <div class="layout">
 <aside class="sidebar">
   <div class="brand"><span class="dot"></span><span>Agent 365 초기 설정 및 구성 가이드</span></div>
-  <div class="brand-sub">Copilot Studio · 관리 · 보안 실습 (0–7)</div>
+  <div class="brand-sub">Copilot Studio · 관리 · 보안 실습 (0–8)</div>
   <nav class="nav-group">
     <h4>가이드</h4>
     <a href="#overview" data-sec="overview" class="nav-parent"><span class="n">◆</span><span>Copilot Studio 에이전트</span></a>
@@ -728,10 +734,11 @@ ROLES = [
  ("1", "승인 및 전사 배포", "AI 관리자", "Entra > 사용자 > 할당된 역할"),
  ("2", "인벤토리 확인", "AI 읽기 권한자", "Entra > 사용자 > 할당된 역할"),
  ("3", "에이전트 차단", "AI 관리자 · 에이전트 ID 관리자", "Entra > 사용자 > 할당된 역할"),
- ("4", "리스크 탐지", "내부자 위험 관리 분석가 또는 조사자", "Purview > 역할 및 범위 > 역할 그룹"),
- ("5", "조건부 접근제어", "조건부 액세스 관리자", "Entra > 사용자 > 할당된 역할"),
- ("6", "런타임 보호", "애플리케이션 관리자 · 보안 관리자 · Power Platform 관리자", "Entra > 역할 / Power Platform 관리 센터"),
- ("7", "트래픽 모니터링", "전역 보안 액세스 관리자", "Entra > 사용자 > 할당된 역할"),
+ ("4", "기본 접근제어", "조건부 액세스 관리자", "Entra > 사용자 > 할당된 역할"),
+ ("5", "리스크 탐지", "내부자 위험 관리 분석가 또는 조사자", "Purview > 역할 및 범위 > 역할 그룹"),
+ ("6", "리스크 기반 접근제어", "조건부 액세스 관리자", "Entra > 사용자 > 할당된 역할"),
+ ("7", "런타임 보호", "애플리케이션 관리자 · 보안 관리자 · Power Platform 관리자", "Entra > 역할 / Power Platform 관리 센터"),
+ ("8", "트래픽 모니터링", "전역 보안 액세스 관리자", "Entra > 사용자 > 할당된 역할"),
 ]
 
 portal_rows = "".join(
@@ -748,9 +755,9 @@ overview = f"""
     <div class="hero">
       <span class="tag">Microsoft Agent 365 · Copilot Studio</span>
       <h1>Copilot Studio 에이전트</h1>
-      <p>Copilot Studio(New experience)에서 만든 에이전트를 안전하게 운영하기 위한 <b>기본 보안 설정</b>을 처음부터 끝까지 안내합니다. 에이전트 생성 → 승인·배포 → 인벤토리 → 차단 → 리스크 탐지 → 조건부 접근제어 → 런타임 보호 → 트래픽 모니터링까지, 각 단계에서 어떤 포털에 들어가 무엇을 설정하는지 스크린샷과 함께 순서대로 짚어 드립니다.</p>
+      <p>Copilot Studio(New experience)에서 만든 에이전트를 안전하게 운영하기 위한 <b>기본 보안 설정</b>을 처음부터 끝까지 안내합니다. 에이전트 생성 → 승인·배포 → 인벤토리 → 차단 → 기본 접근제어 → 리스크 탐지 → 리스크 기반 접근제어 → 런타임 보호 → 트래픽 모니터링까지, 각 단계에서 어떤 포털에 들어가 무엇을 설정하는지 스크린샷과 함께 순서대로 짚어 드립니다.</p>
     </div>
-    <p class="page-lead">이 가이드는 하나의 실습 환경에서 만든 데모 에이전트(<code>Agent365-Guide-Demo</code>)를 대상으로, 관리자·보안 담당자가 실제로 수행하는 구성 흐름을 재현합니다. 왼쪽 <b>구성 단계(0–7)</b> 목차에서 각 장으로 이동하고, 아래 표의 역할 행을 클릭하면 해당 단계로 바로 이동합니다.</p>
+    <p class="page-lead">이 가이드는 하나의 실습 환경에서 만든 데모 에이전트(<code>Agent365-Guide-Demo</code>)를 대상으로, 관리자·보안 담당자가 실제로 수행하는 구성 흐름을 재현합니다. 왼쪽 <b>구성 단계(0–8)</b> 목차에서 각 장으로 이동하고, 아래 표의 역할 행을 클릭하면 해당 단계로 바로 이동합니다.</p>
 
     <h2 class="ov-h">이 가이드의 범위 · Copilot Studio 참고</h2>
     <div class="scope-box">
@@ -764,7 +771,7 @@ overview = f"""
     <div class="tw"><table><thead><tr><th>포털</th><th>이 가이드에서의 용도</th><th>바로가기</th></tr></thead><tbody>{portal_rows}</tbody></table></div>
 
     <h2 class="ov-h">단계별 필요한 역할 한눈에</h2>
-    <p class="ov-sub">각 단계를 수행하기 전에 아래 역할을 미리 할당해 두세요. 대부분 <b>Entra 관리 센터 &gt; 사용자 &gt; 할당된 역할 &gt; 할당 추가</b>에서 부여하며, 4장은 Purview 역할 그룹, 6장 일부는 Power Platform 관리자 지정이 필요합니다. 행을 클릭하면 해당 단계로 이동합니다.</p>
+    <p class="ov-sub">각 단계를 수행하기 전에 아래 역할을 미리 할당해 두세요. 대부분 <b>Entra 관리 센터 &gt; 사용자 &gt; 할당된 역할 &gt; 할당 추가</b>에서 부여하며, 5장은 Purview 역할 그룹, 7장 일부는 Power Platform 관리자 지정이 필요합니다. 행을 클릭하면 해당 단계로 이동합니다.</p>
     <div class="tw"><table><thead><tr><th>#</th><th>단계</th><th>필요한 역할</th><th>할당 위치</th></tr></thead><tbody>{role_rows}</tbody></table></div>
     <div class="note">역할은 <b>최소 권한 원칙</b>에 따라 필요한 단계에만 부여하고, 실습이 끝나면 회수하는 것을 권장합니다. AI 관리자·에이전트 ID 관리자·조건부 액세스 관리자 등은 테넌트 전체에 영향을 주는 상위 권한이므로 할당 대상을 신중히 관리하세요.</div>
 
